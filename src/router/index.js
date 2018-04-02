@@ -11,6 +11,8 @@ import EnvironmentDetail from '~/modules/platform/environment/environmentDetail'
 // 数据流通平台 --> 用户管理
 import UserManage from '~/modules/platform/userManage/userManage'
 import UserManageDetail from '~/modules/platform/userManage/userManageDetail'
+// 数据流通平台 --> 数据目录
+import DataDirectory from '~/modules/platform/dataDirectory/dataDirectory'
 // 数据流通平台 --> 平台监控
 import Monitor from '~/modules/platform/monitor/monitor'
 import MonitorBlockChain from '~/modules/platform/monitor/monitorBlockChain/monitorBlockChain'
@@ -46,6 +48,11 @@ export default new Router({
                     component: Environment
                 },
                 {
+                    path: '/platform/environmentDetail',
+                    name: 'environmentDetail',
+                    component: EnvironmentDetail
+                },
+                {
                     path: '/platform/userManage',
                     name: 'userManage',
                     component: UserManage
@@ -56,9 +63,9 @@ export default new Router({
                     component: UserManageDetail
                 },
                 {
-                    path: '/platform/environmentDetail',
-                    name: 'environmentDetail',
-                    component: EnvironmentDetail
+                    path: '/platform/dataDirectory',
+                    name: 'dataDirectory',
+                    component: DataDirectory
                 },
                 {
                     path: '/platform/dataStatistics',

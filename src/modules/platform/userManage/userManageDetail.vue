@@ -45,7 +45,7 @@
             <div class="userMsgBox clear">
                 <span class="fl">用户名：</span>
                 <el-input class="fl" size="small" :disabled="true"></el-input>
-                <el-button class="fl" size="small" type="primary">重置密码</el-button>
+                <el-button class="fl" size="small" type="primary" style="margin: 9px;">重置密码</el-button>
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">用户名：</span>
@@ -53,8 +53,8 @@
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">积分用户：</span>
-                <el-button size="small" type="primary">主要按钮</el-button>
-                <el-button size="small" type="primary">主要按钮</el-button>
+                <el-button size="small" type="primary">账单</el-button>
+                <el-button size="small" type="primary">充值</el-button>
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">账户余额：</span>
@@ -101,6 +101,9 @@
             span{
                 font-size: 14px;
                 width: 70px;
+            }
+            p{
+                font-size: 14px;
             }
             .el-input{
                 width: 217px;
