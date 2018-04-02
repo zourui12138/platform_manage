@@ -8,11 +8,18 @@ import Home from '~/modules/platform/home/home'
 // 数据流通平台 --> 环境管理
 import Environment from '~/modules/platform/environment/environment'
 import EnvironmentDetail from '~/modules/platform/environment/environmentDetail'
+// 数据流通平台 --> 用户管理
+import UserManage from '~/modules/platform/userManage/userManage'
+import UserManageDetail from '~/modules/platform/userManage/userManageDetail'
 // 数据流通平台 --> 平台监控
 import Monitor from '~/modules/platform/monitor/monitor'
 import MonitorBlockChain from '~/modules/platform/monitor/monitorBlockChain/monitorBlockChain'
+import MonitorBlockChainDetail from '~/modules/platform/monitor/monitorBlockChain/monitorBlockChainDetail'
 import MonitorEnvironment from '~/modules/platform/monitor/monitorEnvironment/monitorEnvironment'
 import MonitorEnvironmentDetail from '~/modules/platform/monitor/monitorEnvironment/monitorEnvironmentDetail'
+// 数据流通平台 --> 数据统计
+import DataStatistics from '~/modules/platform/dataStatistics/dataStatistics'
+
 
 Vue.use(Router);
 
@@ -39,9 +46,24 @@ export default new Router({
                     component: Environment
                 },
                 {
+                    path: '/platform/userManage',
+                    name: 'userManage',
+                    component: UserManage
+                },
+                {
+                    path: '/platform/userManageDetail',
+                    name: 'userManageDetail',
+                    component: UserManageDetail
+                },
+                {
                     path: '/platform/environmentDetail',
                     name: 'environmentDetail',
                     component: EnvironmentDetail
+                },
+                {
+                    path: '/platform/dataStatistics',
+                    name: 'dataStatistics',
+                    component: DataStatistics
                 },
                 {
                     path: '/platform/monitor',
@@ -52,6 +74,11 @@ export default new Router({
                             path: '/platform/monitor/blockChain',
                             name: 'monitorBlockChain',
                             component: MonitorBlockChain
+                        },
+                        {
+                            path: '/platform/monitor/blockChainDetail',
+                            name: 'monitorBlockChainDetail',
+                            component: MonitorBlockChainDetail
                         },
                         {
                             path: '/platform/monitor/environment',

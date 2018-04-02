@@ -1,5 +1,5 @@
 <template>
-    <div id="monitorEnvironmentDetail">
+    <div id="monitorBlockChainDetail">
         <ul class="title clear">
             <li class="fl">xxx虚拟机</li>
             <li class="fr">状态：<span>up</span></li>
@@ -33,7 +33,7 @@
 
 <script>
     export default {
-        name: "monitor-environment-detail",
+        name: "monitor-block-chain-detail",
         data() {
             return{}
         },

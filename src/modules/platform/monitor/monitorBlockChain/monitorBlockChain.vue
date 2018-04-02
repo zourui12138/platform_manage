@@ -2,41 +2,219 @@
     <div id="monitorBlockChain">
         <div class="count">
             <el-row :gutter="40">
-                <el-col :span="12"><div class="countBox"></div></el-col>
-                <el-col :span="12"><div class="countBox"></div></el-col>
+                <el-col :span="12">
+                    <div class="countBox clear">
+                        <img class="fl" src="../../../../assets/img/platform/monitor/blockChain/disableServer.png" alt="">
+                        <div class="fl">
+                            <h2>当前时刻节点服务器不可用<strong class="fr">29<span>台</span></strong></h2>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="countBox clear">
+                        <img class="fl" src="../../../../assets/img/platform/monitor/blockChain/disablePing.png" alt="">
+                        <div class="fl">
+                            <h2>当前时刻节点服务器ping不可达<strong class="fr">24<span>台</span></strong></h2>
+                        </div>
+                    </div>
+                </el-col>
             </el-row>
         </div>
         <div class="content">
-            <el-row class="charts" :gutter="60">
-                <el-col :span="17">
-                    <el-row>
-                        <el-col :span="10">
-                            <h1></h1>
-                            <div class="chartBox chartGauge"></div>
-                        </el-col>
-                        <el-col :span="14">
-                            <h1></h1>
-                            <div class="chartBox chartBarVertical"></div>
-                        </el-col>
-                    </el-row>
-                </el-col>
-                <el-col :span="7">
-                    <h1></h1>
-                    <div class="chartBox chartBarHorizontal"></div>
-                </el-col>
-                <el-col :span="24">
-                    <h1></h1>
-                    <div class="chartBox chartLine"></div>
-                </el-col>
-            </el-row>
+            <div class="search">
+                <el-select placeholder="请选择" v-model="selected">
+                    <el-option label="全部" value="全部"></el-option>
+                </el-select>
+                <el-input placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
+            </div>
+            <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
+                <el-table-column prop="name" label="名称"></el-table-column>
+                <el-table-column prop="host" label="主机"></el-table-column>
+                <el-table-column prop="ip" label="ip地址"></el-table-column>
+                <el-table-column prop="cluster" label="群集"></el-table-column>
+                <el-table-column prop="dataCenter" label="数据中心"></el-table-column>
+                <el-table-column prop="memory" label="内存"></el-table-column>
+                <el-table-column prop="cpu" label="CPU"></el-table-column>
+                <el-table-column prop="network" label="网络"></el-table-column>
+                <el-table-column prop="date" label="使用时间"></el-table-column>
+                <el-table-column prop="user" label="使用方"></el-table-column>
+                <el-table-column label="状态">
+                    <template slot-scope="scope">
+                        <span>{{ scope.row.status }}</span>
+                        <el-switch v-model="scope.row.status === '使用中'"></el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="mini">详情</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="page clear">
+                <el-pagination class="fr" background layout="prev, pager, next" :total="1000"></el-pagination>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "monitor-block-chain"
+        name: "monitor-block-chain",
+        data() {
+            return{
+                tableData: [
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    },
+                    {
+                        name: '王小虎',
+                        host: 'vd56',
+                        ip: '192.168.111.222',
+                        cluster: '群集',
+                        dataCenter: '数据中心',
+                        memory: '0%',
+                        cpu: '0%',
+                        network: '网络',
+                        date: '2016-05-02',
+                        user: '迅鳐成都科技',
+                        status: '使用中'
+                    }
+                ],
+                selected: '全部'
+            }
+        }
     }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+    .count{
+        img{
+            margin:35px 34px 35px 0;
+        }
+    }
+    .content{
+        .search{
+            padding: 17px 0;
+            .el-input{
+                width: 217px;
+            }
+            .el-select{
+                margin-right: 10px;
+            }
+        }
+    }
+</style>

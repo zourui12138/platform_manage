@@ -11,6 +11,7 @@ body {
     height: calc(100%);
     min-width: 1920px;
     background-color: #f6f7fb;
+    color: #606266;
 }
 ul, ol, p, h1, h2, h3, h4, h5, h6, button, input {
     margin: 0;
@@ -56,6 +57,41 @@ input, button {
         height: 110px;
         background-color: #fff;
         box-shadow: 0 0 5px #ddd;
+        padding: 0 30px;
+        div{
+            margin: 23px 0;
+            width: calc(100% - 89px);
+            h1{
+                height: 40px;
+                line-height: 40px;
+                strong{
+                    font-size: 36px;
+                    color: #1e244a;
+                }
+                span{
+                    font-size: 18px;
+                    color: #ffc74a;
+                }
+            }
+            h2{
+                height: 64px;
+                line-height: 64px;
+                strong{
+                    font-size: 36px;
+                    span{
+                        font-size: 16px;
+                        font-weight: normal;
+                        margin-left: 10px;
+                    }
+                }
+            }
+            p{
+                font-size: 18px;
+                color: #7e8f95;
+                height: 24px;
+                line-height: 24px;
+            }
+        }
     }
 }
 /* .content */
@@ -76,8 +112,10 @@ input, button {
 .charts{
     h1{
         height: 50px;
+        line-height: 50px;
         background-color: #f3f7ff;
         margin: 20px 0;
+        padding-left: 30px;
     }
     .chartBox{
         height: 270px;

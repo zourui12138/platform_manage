@@ -3,18 +3,61 @@
         <header class="breadcrumb">所在位置：<span>环境管理</span></header>
         <div class="count">
             <el-row :gutter="40">
-                <el-col :span="6"><div class="countBox"></div></el-col>
-                <el-col :span="6"><div class="countBox"></div></el-col>
-                <el-col :span="6"><div class="countBox"></div></el-col>
-                <el-col :span="6"><div class="countBox"></div></el-col>
+                <el-col :span="6">
+                    <div class="countBox clear">
+                        <img class="fl" src="../../../assets/img/platform/environment/virtualTotal.png" alt="">
+                        <div class="fl">
+                            <h1 class="clear">
+                                <strong class="fl">344</strong>
+                            </h1>
+                            <p>虚拟机总数</p>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="countBox clear">
+                        <img class="fl" src="../../../assets/img/platform/environment/virtualStart.png" alt="">
+                        <div class="fl">
+                            <h1 class="clear">
+                                <strong class="fl">67,345</strong>
+                            </h1>
+                            <p>已启用虚拟机</p>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="countBox clear">
+                        <img class="fl" src="../../../assets/img/platform/environment/virtualDisable.png" alt="">
+                        <div class="fl">
+                            <h1 class="clear">
+                                <strong class="fl">344</strong>
+                            </h1>
+                            <p>已停用虚拟机</p>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="countBox clear">
+                        <img class="fl" src="../../../assets/img/platform/environment/virtualDestroy.png" alt="">
+                        <div class="fl">
+                            <h1 class="clear">
+                                <strong class="fl">344</strong>
+                            </h1>
+                            <p>已销毁虚拟机</p>
+                        </div>
+                    </div>
+                </el-col>
             </el-row>
         </div>
         <div class="content">
-            <div>
-                <el-select placeholder="请选择" v-model="selected">
-                    <el-option label="全部" value="全部"></el-option>
+            <div class="search">
+                <el-select size="medium" placeholder="请选择" v-model="selected">
+                    <el-option label="虚拟机总数" value="虚拟机总数"></el-option>
+                    <el-option label="已启用虚拟机" value="已启用虚拟机"></el-option>
+                    <el-option label="已停用虚拟机" value="已停用虚拟机"></el-option>
+                    <el-option label="已销毁虚拟机" value="已销毁虚拟机"></el-option>
                 </el-select>
-                <el-input placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
+                <el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
             </div>
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
                 <el-table-column prop="name" label="名称"></el-table-column>
@@ -183,12 +226,27 @@
                         status: '使用中'
                     }
                 ],
-                selected: '全部'
+                selected: '虚拟机总数'
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .count{
+        img{
+            margin:33px 34px 33px 0;
+        }
+    }
+    .content{
+        .search{
+            padding: 17px 0;
+            .el-input{
+                width: 217px;
+            }
+            .el-select{
+                margin-right: 10px;
+            }
+        }
+    }
 </style>
