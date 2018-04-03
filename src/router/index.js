@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// 登录
+import Login from '~/modules/login/login'
 // 数据流通平台
 import Platform from '~/modules/platform/platform'
 // 数据流通平台 --> 平台总揽
@@ -8,9 +10,12 @@ import Home from '~/modules/platform/home/home'
 // 数据流通平台 --> 环境管理
 import Environment from '~/modules/platform/environment/environment'
 import EnvironmentDetail from '~/modules/platform/environment/environmentDetail'
+// 数据流通平台 --> 流通管理
+import CirculateManage from '~/modules/platform/circulateManage/circulateManage'
 // 数据流通平台 --> 用户管理
 import UserManage from '~/modules/platform/userManage/userManage'
 import UserManageDetail from '~/modules/platform/userManage/userManageDetail'
+import UserBill from '~/modules/platform/userManage/userBill'
 // 数据流通平台 --> 数据目录
 import DataDirectory from '~/modules/platform/dataDirectory/dataDirectory'
 // 数据流通平台 --> 平台监控
@@ -33,6 +38,11 @@ export default new Router({
             redirect: '/platform/home'
         },
         {
+            path: '/login',
+            name: 'login',
+            component: Login,
+        },
+        {
             path: '/platform',
             name: 'platform',
             component: Platform,
@@ -53,6 +63,11 @@ export default new Router({
                     component: EnvironmentDetail
                 },
                 {
+                    path: '/platform/circulateManage',
+                    name: 'circulateManage',
+                    component: CirculateManage
+                },
+                {
                     path: '/platform/userManage',
                     name: 'userManage',
                     component: UserManage
@@ -63,14 +78,14 @@ export default new Router({
                     component: UserManageDetail
                 },
                 {
+                    path: '/platform/userBill',
+                    name: 'userBill',
+                    component: UserBill
+                },
+                {
                     path: '/platform/dataDirectory',
                     name: 'dataDirectory',
                     component: DataDirectory
-                },
-                {
-                    path: '/platform/dataStatistics',
-                    name: 'dataStatistics',
-                    component: DataStatistics
                 },
                 {
                     path: '/platform/monitor',
@@ -98,6 +113,11 @@ export default new Router({
                             component: MonitorEnvironmentDetail
                         }
                     ]
+                },
+                {
+                    path: '/platform/dataStatistics',
+                    name: 'dataStatistics',
+                    component: DataStatistics
                 }
             ]
         }

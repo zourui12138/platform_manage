@@ -45,7 +45,7 @@
             <div class="userMsgBox clear">
                 <span class="fl">用户名：</span>
                 <el-input class="fl" size="small" :disabled="true"></el-input>
-                <el-button class="fl" size="small" type="primary" style="margin: 9px;">重置密码</el-button>
+                <el-button class="fl" size="small" type="primary" style="margin: 9px;" @click="resetPassword">重置密码</el-button>
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">用户名：</span>
@@ -53,8 +53,8 @@
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">积分用户：</span>
-                <el-button size="small" type="primary">账单</el-button>
-                <el-button size="small" type="primary">充值</el-button>
+                <el-button size="small" type="primary" @click="toUserBill">账单</el-button>
+                <el-button size="small" type="primary" @click="openDialog">充值</el-button>
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">账户余额：</span>
@@ -64,17 +64,67 @@
                 <span class="fl">累计收入：</span>
                 <p class="fl">123,456</p>
             </div>
-            <div class="userMsgFooter">
-                <el-button size="small" type="primary">取消</el-button>
-                <el-button size="small" type="primary">保存</el-button>
-            </div>
         </div>
+        <el-dialog
+            title="积分充值"
+            width="400px"
+            :before-close="closeDialog"
+            :visible.sync="dialogVisible">
+            <el-form :model="dialogData" label-width="90px">
+                <el-form-item label="充值金额：">
+                    <el-input v-model="dialogData.money" placeholder="请输入充值金额"></el-input>
+                </el-form-item>
+                <el-form-item label="充值备注：">
+                    <el-input v-model="dialogData.comment" placeholder="请输入充值备注"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button size="small" @click="closeDialog">取 消</el-button>
+                <el-button size="small" type="primary" @click="submitDialog">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     export default {
-        name: "user-manage-detail"
+        name: "user-manage-detail",
+        data() {
+            return{
+                dialogVisible: false,
+                dialogData: {
+                    money: null,
+                    comment: null
+                }
+            }
+        },
+        methods: {
+            openDialog() {
+                this.dialogVisible = true;
+            },
+            closeDialog() {
+                this.dialogVisible = false;
+                this.$message('这是一条消息提示');
+            },
+            submitDialog() {
+                this.dialogVisible = false;
+                this.$message({message: '恭喜你，这是一条成功消息', type: 'success'});
+            },
+            resetPassword() {
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$message({type: 'success', message: '删除成功!'});
+                }).catch(() => {
+                    this.$message({type: 'info', message: '已取消删除'});
+                });
+            },
+            toUserBill() {
+                this.$router.push({path : '/platform/userBill', query: { uuid : '12138' }});
+            }
+        }
     }
 </script>
 
@@ -111,10 +161,6 @@
             .el-textarea{
                 width: calc(100% - 70px);
             }
-        }
-        .userMsgFooter{
-            padding-left: 16px;
-            margin-top: 50px;
         }
     }
 </style>

@@ -10,21 +10,21 @@
                     <el-row>
                         <el-col :span="10">
                             <h1>CPU使用率</h1>
-                            <div class="chartBox chartGauge" ref="chartGauge"></div>
+                            <div class="chartBox" ref="chartGauge"></div>
                         </el-col>
                         <el-col :span="14">
                             <h1></h1>
-                            <div class="chartBox chartBarVertical" ref="chartBarVertical"></div>
+                            <div class="chartBox chartBorder" ref="chartBarVertical"></div>
                         </el-col>
                     </el-row>
                 </el-col>
                 <el-col :span="7">
                     <h1>内存使用</h1>
-                    <div class="chartBox chartPie" ref="chartPie"></div>
+                    <div class="chartBox" ref="chartPie"></div>
                 </el-col>
                 <el-col :span="24">
                     <h1>IO&nbsp;Await</h1>
-                    <div class="chartBox chartLine" ref="chartLine"></div>
+                    <div class="chartBox" ref="chartLine"></div>
                 </el-col>
             </el-row>
         </div>

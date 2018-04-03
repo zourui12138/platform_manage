@@ -74,7 +74,7 @@
                 </el-col>
                 <el-col :span="12">
                     <h1></h1>
-                    <div class="chartBox chartBarVertical" ref="chartPieContent"></div>
+                    <div class="chartBox chartBorder" ref="chartPieContent"></div>
                 </el-col>
             </el-row>
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
@@ -293,15 +293,6 @@
 
 <style lang="scss" scoped>
     .content{
-        .search{
-            padding: 17px 0;
-            .el-input{
-                width: 217px;
-            }
-            .el-select{
-                margin-right: 10px;
-            }
-        }
         .tradeCount{
             padding-top: 20px;
             border-top: 2px solid #f3f7ff;

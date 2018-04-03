@@ -30,7 +30,7 @@
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" size="mini">详情</el-button>
+                        <el-button type="text" size="mini" @click="toDetail">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -180,20 +180,13 @@
                 ],
                 selected: '虚拟机总数'
             }
+        },
+        methods: {
+            toDetail() {
+                this.$router.push({path : '/platform/userManageDetail', query: { uuid : '12138' }});
+            }
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    .content{
-        .search{
-            padding: 17px 0;
-            .el-input{
-                width: 217px;
-            }
-            .el-select{
-                margin-right: 10px;
-            }
-        }
-    }
-</style>
+<style lang="scss" scoped></style>
