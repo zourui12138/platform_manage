@@ -8,9 +8,9 @@
                         <img class="fl" src="../../../assets/img/platform/environment/virtualTotal.png" alt="">
                         <div class="fl">
                             <h1 class="clear">
-                                <strong class="fl">344</strong>
+                                <strong class="fl">{{countData.totalDFC}}</strong>
                             </h1>
-                            <p>虚拟机总数</p>
+                            <p>DFC总数</p>
                         </div>
                     </div>
                 </el-col>
@@ -19,9 +19,9 @@
                         <img class="fl" src="../../../assets/img/platform/environment/virtualStart.png" alt="">
                         <div class="fl">
                             <h1 class="clear">
-                                <strong class="fl">67,345</strong>
+                                <strong class="fl">{{countData.startDFC}}</strong>
                             </h1>
-                            <p>已启用虚拟机</p>
+                            <p>已启用DFC</p>
                         </div>
                     </div>
                 </el-col>
@@ -30,9 +30,9 @@
                         <img class="fl" src="../../../assets/img/platform/environment/virtualDisable.png" alt="">
                         <div class="fl">
                             <h1 class="clear">
-                                <strong class="fl">344</strong>
+                                <strong class="fl">{{countData.stopDFC}}</strong>
                             </h1>
-                            <p>已停用虚拟机</p>
+                            <p>已停用DFC</p>
                         </div>
                     </div>
                 </el-col>
@@ -41,9 +41,9 @@
                         <img class="fl" src="../../../assets/img/platform/environment/virtualDestroy.png" alt="">
                         <div class="fl">
                             <h1 class="clear">
-                                <strong class="fl">344</strong>
+                                <strong class="fl">{{countData.destroyDFC}}</strong>
                             </h1>
-                            <p>已销毁虚拟机</p>
+                            <p>已销毁DFC</p>
                         </div>
                     </div>
                 </el-col>
@@ -60,179 +60,78 @@
                 <el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
             </div>
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
-                <el-table-column prop="name" label="名称"></el-table-column>
-                <el-table-column prop="host" label="主机"></el-table-column>
+                <el-table-column prop="vmName" label="名称"></el-table-column>
+                <el-table-column prop="hostName" label="主机"></el-table-column>
                 <el-table-column prop="ip" label="ip地址"></el-table-column>
                 <el-table-column prop="cluster" label="群集"></el-table-column>
                 <el-table-column prop="dataCenter" label="数据中心"></el-table-column>
-                <el-table-column prop="memory" label="内存"></el-table-column>
-                <el-table-column prop="cpu" label="CPU"></el-table-column>
-                <el-table-column prop="network" label="网络"></el-table-column>
-                <el-table-column prop="date" label="使用时间"></el-table-column>
-                <el-table-column prop="user" label="使用方"></el-table-column>
+                <el-table-column prop="createAt" label="使用时间"></el-table-column>
+                <el-table-column prop="dataUserName" label="使用方"></el-table-column>
                 <el-table-column label="状态">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.status }}</span>
-                        <el-switch v-model="scope.row.status === '使用中'"></el-switch>
+                    <template slot-scope="scope" class="clear">
+                        <span>{{ scope.row.status ? '运行中' : '停止服务' }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" size="mini" @click="toDetail">详情</el-button>
+                        <el-button type="text" size="mini" @click="toDetail(scope.row.id)">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="page clear">
-                <el-pagination class="fr" background layout="prev, pager, next" :total="1000"></el-pagination>
+                <el-pagination
+                    class="fr"
+                    background
+                    layout="prev, pager, next"
+                    :total="totalPage"
+                    @current-change="getTableData">
+                </el-pagination>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { DFC_getTableData } from "~/api/getData"
+    import { DFC_getCountData } from "~/api/getData"
+    import { DFC_start } from "~/api/getData"
+    import { DFC_stop } from "~/api/getData"
+
     export default {
         name: "monitorEnvironment",
         data() {
             return{
-                tableData: [
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    }
-                ],
+                pageSize: 10,
+                tableData: null,
+                totalPage: null,
+                countData: {
+                    totalDFC: null,
+                    startDFC: null,
+                    stopDFC: null,
+                    destroyDFC: null
+                },
                 selected: '虚拟机总数'
             }
         },
         methods: {
-            toDetail() {
-                this.$router.push({path : '/platform/environmentDetail', query: { uuid : '12138' }});
-            }
+            toDetail(id) {
+                this.$router.push({path : '/platform/environmentDetail', query: { id : id }});
+            },
+            async getTableData(page) {
+                let data;
+                data = await DFC_getTableData(page,this.pageSize);
+                this.tableData = data.data.data.content;
+                this.totalPage = data.data.data.totalPage;
+            },
+            async getCountData() {
+                let data;
+                data = await DFC_getCountData();
+                this.countData = data.data.data;
+            },
+        },
+        mounted() {
+            this.getTableData(1);
+            this.getCountData();
         }
     }
 </script>

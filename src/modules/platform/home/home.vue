@@ -72,22 +72,22 @@
                 <el-row>
                     <el-col :span="7">
                         <div class="virtualCount">
-                            <h1>DFC数量(<span>234</span>)</h1>
+                            <h1>DFC数量(<span>{{countData.totalDFC}}</span>)</h1>
                             <ul>
                                 <li class="clear">
                                     <img src="../../../assets/img/platform/home/startVirtual.png" alt="">
                                     <span>启动中的数量</span>
-                                    <span class="fr">(234)</span>
+                                    <span class="fr">({{countData.startDFC}})</span>
+                                </li>
+                                <li class="clear">
+                                    <img src="../../../assets/img/platform/home/errorVirtual.png" alt="">
+                                    <span>停止中的数量</span>
+                                    <span class="fr">({{countData.stopDFC}})</span>
                                 </li>
                                 <li class="clear">
                                     <img src="../../../assets/img/platform/home/destroyVirtual.png" alt="">
                                     <span>销毁的数量</span>
-                                    <span class="fr">(234)</span>
-                                </li>
-                                <li class="clear">
-                                    <img src="../../../assets/img/platform/home/errorVirtual.png" alt="">
-                                    <span>异常状态</span>
-                                    <span class="fr">(234)</span>
+                                    <span class="fr">({{countData.destroyDFC}})</span>
                                 </li>
                             </ul>
                         </div>
@@ -95,17 +95,27 @@
                     <el-col :span="17">
                         <div class="virtualTable">
                             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
-                                <el-table-column prop="name" label="名称"></el-table-column>
-                                <el-table-column prop="host" label="主机"></el-table-column>
+                                <el-table-column prop="vmName" label="名称"></el-table-column>
+                                <el-table-column prop="hostName" label="主机"></el-table-column>
                                 <el-table-column prop="ip" label="ip地址"></el-table-column>
-                                <el-table-column prop="memory" label="内存"></el-table-column>
-                                <el-table-column prop="cpu" label="CPU"></el-table-column>
-                                <el-table-column prop="date" label="使用时间"></el-table-column>
-                                <el-table-column prop="user" label="使用方"></el-table-column>
-                                <el-table-column prop="status" label="状态"></el-table-column>
+                                <el-table-column prop="memoryUsage" label="内存"></el-table-column>
+                                <el-table-column prop="cpuUsage" label="CPU"></el-table-column>
+                                <el-table-column prop="createAt" label="使用时间" width="150"></el-table-column>
+                                <el-table-column prop="dataUserName" label="使用方"></el-table-column>
+                                <el-table-column label="状态">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.status ? '运行中' : '停止服务' }}</span>
+                                    </template>
+                                </el-table-column>>
                             </el-table>
                             <div class="page clear">
-                                <el-pagination class="fr" background layout="prev, pager, next" :total="1000"></el-pagination>
+                                <el-pagination
+                                    class="fr"
+                                    background
+                                    layout="prev, pager, next"
+                                    :total="totalPage"
+                                    @current-change="getTableData">
+                                </el-pagination>
                             </div>
                         </div>
                     </el-col>
@@ -116,68 +126,23 @@
 </template>
 
 <script>
+    import { DFC_getTableData } from "~/api/getData"
+    import { DFC_getCountData } from "~/api/getData"
+
     export default {
         name: "home",
         data() {
             return{
-                tableData: [
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        memory: '0%',
-                        cpu: '0%',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: 'up'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        memory: '0%',
-                        cpu: '0%',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: 'up'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        memory: '0%',
-                        cpu: '0%',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: 'up'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        memory: '0%',
-                        cpu: '0%',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: 'up'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        memory: '0%',
-                        cpu: '0%',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: 'up'
-                    }
-                ]
+                pageSize: 5,
+                tableData: null,
+                totalPage: null,
+                countData: {
+                    totalDFC: null,
+                    startDFC: null,
+                    stopDFC: null,
+                    destroyDFC: null
+                }
             }
-        },
-        mounted(){
-            this.gauge();
-            this.barVertical();
-            this.barHorizontal();
         },
         methods: {
             gauge() {
@@ -357,7 +322,25 @@
                 };
                 // 绘制图表
                 myChart.setOption(option);
+            },
+            async getTableData(page) {
+                let data;
+                data = await DFC_getTableData(page,this.pageSize);
+                this.tableData = data.data.data.content;
+                this.totalPage = data.data.data.totalPage;
+            },
+            async getCountData() {
+                let data;
+                data = await DFC_getCountData();
+                this.countData = data.data.data;
             }
+        },
+        mounted(){
+            this.gauge();
+            this.barVertical();
+            this.barHorizontal();
+            this.getTableData(1);
+            this.getCountData();
         }
     }
 </script>
