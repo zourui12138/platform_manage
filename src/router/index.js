@@ -12,6 +12,8 @@ import Environment from '~/modules/platform/environment/environment'
 import EnvironmentDetail from '~/modules/platform/environment/environmentDetail'
 // 数据流通平台 --> 流通管理
 import CirculateManage from '~/modules/platform/circulateManage/circulateManage'
+import CirculateManageDetail from '~/modules/platform/circulateManage/circulateManageDetail'
+import CirculateManageVoucher from '~/modules/platform/circulateManage/circulateManageVoucher'
 // 数据流通平台 --> 用户管理
 import UserManage from '~/modules/platform/userManage/userManage'
 import UserManageDetail from '~/modules/platform/userManage/userManageDetail'
@@ -66,6 +68,16 @@ export default new Router({
                     path: '/platform/circulateManage',
                     name: 'circulateManage',
                     component: CirculateManage
+                },
+                {
+                    path: '/platform/circulateManageDetail',
+                    name: 'circulateManageDetail',
+                    component: CirculateManageDetail
+                },
+                {
+                    path: '/platform/circulateManageVoucher',
+                    name: 'circulateManageVoucher',
+                    component: CirculateManageVoucher
                 },
                 {
                     path: '/platform/userManage',

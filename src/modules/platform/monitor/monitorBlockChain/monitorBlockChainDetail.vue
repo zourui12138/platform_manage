@@ -1,5 +1,5 @@
 <template>
-    <div id="monitorBlockChainDetail">
+    <div>
         <ul class="title clear">
             <li class="fl">xxx虚拟机</li>
             <li class="fr">状态：<span>up</span></li>

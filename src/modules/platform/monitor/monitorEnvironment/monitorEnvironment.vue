@@ -1,5 +1,5 @@
 <template>
-    <div id="monitorEnvironment">
+    <div>
         <div class="count">
             <el-row :gutter="40">
                 <el-col :span="6">

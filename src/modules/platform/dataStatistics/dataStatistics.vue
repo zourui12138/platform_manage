@@ -1,5 +1,5 @@
 <template>
-    <div id="dataStatistics">
+    <div>
         <header class="breadcrumb">所在位置：<span>数据统计</span></header>
         <div class="content">
             <div class="search">

@@ -1,5 +1,5 @@
 <template>
-    <div id="home">
+    <div>
         <header class="breadcrumb">所在位置：<span>平台总揽</span></header>
         <div class="count">
             <el-row :gutter="40">

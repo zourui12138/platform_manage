@@ -1,5 +1,5 @@
 <template>
-    <div id="environmentDetail">
+    <div>
         <header class="breadcrumb">所在位置：<span>环境管理&nbsp;>>&nbsp;详情</span></header>
         <ul class="virtualTitle clear">
             <li class="fl">{{detailData.vmName}}</li>

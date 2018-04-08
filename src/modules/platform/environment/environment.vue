@@ -1,5 +1,5 @@
 <template>
-    <div id="environment">
+    <div>
         <header class="breadcrumb">所在位置：<span>环境管理</span></header>
         <div class="count">
             <el-row :gutter="40">

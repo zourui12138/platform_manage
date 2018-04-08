@@ -1,5 +1,5 @@
 <template>
-    <div id="userManageDetail">
+    <div>
         <header class="breadcrumb">所在位置：<span>用户管理&nbsp;>>&nbsp;详情</span></header>
         <div class="userMsg">
             <div class="userMsgTitle"><h1>数据流通信息</h1></div>

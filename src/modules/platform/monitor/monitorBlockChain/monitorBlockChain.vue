@@ -1,5 +1,5 @@
 <template>
-    <div id="monitorBlockChain">
+    <div>
         <div class="count">
             <el-row :gutter="40">
                 <el-col :span="12">

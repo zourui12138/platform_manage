@@ -1,5 +1,5 @@
 <template>
-    <div id="userManage">
+    <div>
         <header class="breadcrumb">所在位置：<span>用户管理</span></header>
         <div class="content">
             <div class="search">

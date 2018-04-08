@@ -1,5 +1,5 @@
 <template>
-    <div id="dataDirectory">
+    <div>
         <header class="breadcrumb">所在位置：<span>数据目录</span></header>
         <div class="title clear">
             <el-button class="fr" size="small" type="primary" @click="openAddDialog(0)">新增</el-button>

@@ -10,7 +10,7 @@
                     <li>后台登录</li>
                     <li class="clear"><span class="fl">用户名</span><input class="fl" type="text" placeholder="请输入用户名"></li>
                     <li class="clear"><span class="fl">密&nbsp;&nbsp;&nbsp;&nbsp;码</span><input class="fl" type="password" placeholder="请输入用户名"></li>
-                    <li><button>登录</button></li>
+                    <li><button @click="loginSuccess">登录</button></li>
                 </ul>
             </div>
         </section>
@@ -22,7 +22,12 @@
 
     export default {
         name: "login",
-        components: {VuePerfectScrollbar}
+        components: {VuePerfectScrollbar},
+        methods: {
+            loginSuccess() {
+                this.$router.push({path : '/platform/home'});
+            }
+        }
     }
 </script>
 

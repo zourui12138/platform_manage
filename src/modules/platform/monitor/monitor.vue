@@ -1,5 +1,5 @@
 <template>
-    <div id="monitor">
+    <div>
         <header class="breadcrumb">所在位置：<span>平台监控</span></header>
         <nav class="monitorMenu">
             <ul class="clear">

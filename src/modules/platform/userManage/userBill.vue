@@ -1,5 +1,5 @@
 <template>
-    <div id="userBill">
+    <div>
         <header class="breadcrumb">所在位置：<span>用户管理&nbsp;>>&nbsp;详情&nbsp;>>&nbsp;账单</span></header>
         <ul class="userBillTitle clear">
             <li class="fl">xxx虚拟机</li>
