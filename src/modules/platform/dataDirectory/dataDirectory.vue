@@ -2,110 +2,157 @@
     <div id="dataDirectory">
         <header class="breadcrumb">所在位置：<span>数据目录</span></header>
         <div class="title clear">
-            <el-button class="fr" size="small" type="primary">新增</el-button>
+            <el-button class="fr" size="small" type="primary" @click="openAddDialog(0)">新增</el-button>
         </div>
         <div class="content">
             <ul class="directoryList">
-                <li>
+                <li v-for="i in tableData">
                     <header class="clear">
                         <img class="fl" src="../../../assets/img/platform/dataDirectory/folder.png" alt="">
-                        <span class="fl">极地海洋学(100)</span>
+                        <span class="fl">{{i.dataDirectoryName}}</span>
                         <div class="fr">
-                            <el-button type="text">新增子类</el-button>
-                            <el-button type="text">修改</el-button>
-                            <el-button type="text">删除</el-button>
+                            <el-button type="text" @click="openAddDialog(i.dataDirectoryId)">新增子类</el-button>
+                            <el-button type="text" @click="openSetDialog(i.dataDirectoryName,i.dataDirectoryId,i.parentDataDirectoryId)">修改</el-button>
+                            <el-button type="text" @click="openDeleteDialog(i.dataDirectoryId)">删除</el-button>
                         </div>
                     </header>
                     <el-row class="secondDirectory">
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                    </el-row>
-                </li>
-                <li>
-                    <header class="clear">
-                        <img class="fl" src="../../../assets/img/platform/dataDirectory/folder.png" alt="">
-                        <span class="fl">极地海洋学(100)</span>
-                        <div class="fr">
-                            <el-button type="text">新增子类</el-button>
-                            <el-button type="text">修改</el-button>
-                            <el-button type="text">删除</el-button>
-                        </div>
-                    </header>
-                    <el-row class="secondDirectory">
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                    </el-row>
-                </li>
-                <li>
-                    <header class="clear">
-                        <img class="fl" src="../../../assets/img/platform/dataDirectory/folder.png" alt="">
-                        <span class="fl">极地海洋学(100)</span>
-                        <div class="fr">
-                            <el-button type="text">新增子类</el-button>
-                            <el-button type="text">修改</el-button>
-                            <el-button type="text">删除</el-button>
-                        </div>
-                    </header>
-                    <el-row class="secondDirectory">
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                    </el-row>
-                </li>
-                <li>
-                    <header class="clear">
-                        <img class="fl" src="../../../assets/img/platform/dataDirectory/folder.png" alt="">
-                        <span class="fl">极地海洋学(100)</span>
-                        <div class="fr">
-                            <el-button type="text">新增子类</el-button>
-                            <el-button type="text">修改</el-button>
-                            <el-button type="text">删除</el-button>
-                        </div>
-                    </header>
-                    <el-row class="secondDirectory">
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
-                        <el-col :span="3"><p>极地海洋学(20)</p></el-col>
+                        <el-col :span="3" v-for="j in i.childrens" :key="j.dataDirectoryId"><p class="clear"><span>{{j.dataDirectoryName}}</span><i class="el-icon-edit fr" @click="openSetDialog(j.dataDirectoryName,j.dataDirectoryId,j.parentDataDirectoryId)"></i><i class="el-icon-delete fr" @click="openDeleteDialog(j.dataDirectoryId)"></i></p></el-col>
                     </el-row>
                 </li>
             </ul>
         </div>
+        <el-dialog
+            title="修改目录名称"
+            width="400px"
+            :visible.sync="setDialogTitleUI"
+            :before-close="closeSetDialog">
+            <div class="dialogContent">
+                <div class="clear">
+                    <span class="fl dialogContentLabel">目录名称：</span>
+                    <div class="fl dialogContentBox">
+                        <el-input placeholder="请输入目录名称" size="small" v-model="setDialogData"></el-input>
+                    </div>
+                </div>
+            </div>
+            <div slot="footer">
+                <el-button size="small" @click="closeSetDialog">取 消</el-button>
+                <el-button size="small" type="primary" @click="setDataDirectory">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog
+            title="新增目录名称"
+            width="400px"
+            :visible.sync="addDialogTitleUI"
+            :before-close="closeAddDialog">
+            <div class="dialogContent">
+                <div class="clear">
+                    <span class="fl dialogContentLabel">目录名称：</span>
+                    <div class="fl dialogContentBox">
+                        <el-input placeholder="请输入目录名称" size="small" v-model="addDialogData"></el-input>
+                    </div>
+                </div>
+            </div>
+            <div slot="footer">
+                <el-button size="small" @click="closeAddDialog">取 消</el-button>
+                <el-button size="small" type="primary" @click="addDataDirectory">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+    import { dataDirectory_getTableData } from "~/api/getData"
+    import { dataDirectory_addDataDirectory } from "~/api/getData"
+    import { dataDirectory_setDataDirectory } from "~/api/getData"
+    import { dataDirectory_deleteDataDirectory } from "~/api/getData"
+
     export default {
-        name: "data-directory"
+        name: "data-directory",
+        data() {
+            return{
+                tableData: null,
+                setDialogTitleUI: false,
+                setDialogData: null,
+                setParentId: null,
+                setId: null,
+                addDialogTitleUI: false,
+                addDialogData: null,
+                addParentId: null,
+                deleteId: null
+            }
+        },
+        methods: {
+            // 修改数据目录
+            openSetDialog(name,id,parentId) {
+                this.setDialogData = name;
+                this.setId = id;
+                this.setParentId = parentId;
+                this.setDialogTitleUI = true;
+            },
+            closeSetDialog() {
+                this.setDialogTitleUI = false;
+                this.$message({type: 'info', message: '取消修改目录名称'});
+            },
+            async setDataDirectory() {
+                let data;
+                data = await dataDirectory_setDataDirectory(this.setDialogData,this.setId,this.setParentId);
+                if(data.data.message === 'success'){
+                    this.setDialogTitleUI = false;
+                    this.$message({type: 'success', message: '修改目录名称完成'});
+                    this.getCountData();
+                }
+            },
+            // 新增数据目录
+            openAddDialog(parentId) {
+                this.addDialogTitleUI = true;
+                this.addParentId = parentId;
+            },
+            closeAddDialog() {
+                this.addDialogTitleUI = false;
+                this.$message({type: 'info', message: '取消新增目录名称'});
+            },
+            async addDataDirectory() {
+                let data;
+                data = await dataDirectory_addDataDirectory(this.addDialogData,this.addParentId);
+                if(data.data.message === 'success'){
+                    this.addDialogTitleUI = false;
+                    this.$message({type: 'success', message: '新增目录名称完成'});
+                    this.getCountData();
+                }
+            },
+            // 删除数据目录
+            openDeleteDialog(id) {
+                this.deleteId = id;
+                this.$confirm('此操作将永久删除该目录, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.deleteDataDirectory();
+                }).catch(() => {
+                    this.$message({type: 'info', message: '已取消删除'});
+                });
+            },
+            async deleteDataDirectory() {
+                let data;
+                data = await dataDirectory_deleteDataDirectory(this.deleteId);
+                if(data.data.message === 'success'){
+                    this.getCountData();
+                    this.$message({type: 'success', message: '删除成功!'});
+                }
+            },
+            // 获取目录数据
+            async getCountData() {
+                let data;
+                data = await dataDirectory_getTableData();
+                console.log(data);
+                this.tableData = data.data.data;
+            },
+        },
+        mounted() {
+            this.getCountData();
+        }
     }
 </script>
 
@@ -117,35 +164,55 @@
     .directoryList{
         font-size: 14px;
         margin-top: 30px;
-        header{
-            height: 50px;
-            line-height: 50px;
-            background-color: #ecf3fd;
-            padding: 0 30px;
-            cursor: pointer;
-            img{
-                vertical-align: top;
-                margin-top: 9px;
-                margin-right: 20px;
-            }
-            div{
-                display: none;
-                a{
-                    margin-left: 20px;
+        li{
+            margin-bottom: 10px;
+            header{
+                height: 50px;
+                line-height: 50px;
+                background-color: #ecf3fd;
+                padding: 0 30px;
+                cursor: pointer;
+                img{
+                    vertical-align: top;
+                    margin-top: 9px;
+                    margin-right: 20px;
+                }
+                div{
+                    display: none;
+                    a{
+                        margin-left: 20px;
+                    }
                 }
             }
-        }
-        header:hover{
-            background-color: #f3f7ff;
-            div{
-                display: block;
+            header:hover{
+                background-color: #f3f7ff;
+                div{
+                    display: block;
+                }
             }
-        }
-        .secondDirectory{
-            padding: 0 60px;
-            p{
-                height: 40px;
-                line-height: 40px;
+            .secondDirectory{
+                padding: 0 50px;
+                p{
+                    height: 30px;
+                    line-height: 30px;
+                    padding: 0 10px;
+                    cursor: pointer;
+                    margin: 5px 0;
+                    i{
+                        margin-top: 8px;
+                        margin-left: 4px;
+                        display: none;
+                    }
+                }
+                p:hover{
+                    background-color: #f3f7ff;
+                    i{
+                        display: inline-block;
+                    }
+                    i:hover{
+                        color: #5a8bff;
+                    }
+                }
             }
         }
     }

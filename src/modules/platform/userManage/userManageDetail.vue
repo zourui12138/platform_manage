@@ -7,49 +7,49 @@
                 <el-col :span="8">
                     <div class="userMsgBox clear">
                         <span class="fl">用户名：</span>
-                        <el-input class="fl" size="small" :disabled="true"></el-input>
+                        <el-input v-model="userDetailData.accountName" class="fl" size="small"  :disabled="true"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="userMsgBox clear">
                         <span class="fl">用户类别：</span>
-                        <el-input class="fl" size="small" :disabled="true"></el-input>
+                        <el-input v-model="userDetailData.accountCategory" class="fl" size="small" :disabled="true"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="userMsgBox clear">
                         <span class="fl">用户ID：</span>
-                        <el-input class="fl" size="small" :disabled="true"></el-input>
+                        <el-input v-model="userDetailData.accountId" class="fl" size="small" :disabled="true"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="userMsgBox clear">
                         <span class="fl">联系人：</span>
-                        <el-input class="fl" size="small" :disabled="true"></el-input>
+                        <el-input v-model="userDetailData.contacts" class="fl" size="small" :disabled="true"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="userMsgBox clear">
                         <span class="fl">联系方式：</span>
-                        <el-input class="fl" size="small" :disabled="true"></el-input>
+                        <el-input v-model="userDetailData.cellphoneNumber" class="fl" size="small" :disabled="true"></el-input>
                     </div>
                 </el-col>
                 <el-col :span="24">
                     <div class="userMsgBox clear">
                         <span class="fl">备用信息：</span>
-                        <el-input class="fl" size="small" resize="none" :rows="2" type="textarea" :disabled="true"></el-input>
+                        <el-input v-model="userDetailData.remarksInformation" class="fl" size="small" resize="none" :rows="2" type="textarea" :disabled="true"></el-input>
                     </div>
                 </el-col>
             </el-row>
             <div class="userMsgTitle" style="margin-top: 20px"><h1>基础环境信息</h1></div>
             <div class="userMsgBox clear">
-                <span class="fl">用户名：</span>
-                <el-input class="fl" size="small" :disabled="true"></el-input>
-                <el-button class="fl" size="small" type="primary" style="margin: 9px;" @click="resetPassword">重置密码</el-button>
+                <span class="fl">用户密码：</span>
+                <el-input v-model="userDetailData.password" class="fl" size="small" :disabled="true"></el-input>
+                <el-button class="fl" size="small" type="primary" style="margin: 9px;" @click="openResetPasswordTip">重置密码</el-button>
             </div>
             <div class="userMsgBox clear">
-                <span class="fl">用户名：</span>
-                <el-switch active-text="开通" inactive-text="关闭"></el-switch>
+                <span class="fl">帐号状态：</span>
+                <el-switch v-model="userDetailData.status" active-text="开通" inactive-text="关闭"></el-switch>
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">积分用户：</span>
@@ -87,11 +87,24 @@
 </template>
 
 <script>
+    import { user_getUserById } from "~/api/getData"
+    import { user_resetPassword } from "~/api/getData"
+
     export default {
         name: "user-manage-detail",
         data() {
             return{
                 dialogVisible: false,
+                userDetailData: {
+                    accountName: null,
+                    accountCategory: null,
+                    accountId: null,
+                    contacts: null,
+                    cellphoneNumber: null,
+                    remarksInformation: null,
+                    password: null,
+                    status: null
+                },
                 dialogData: {
                     money: null,
                     comment: null
@@ -110,20 +123,43 @@
                 this.dialogVisible = false;
                 this.$message({message: '恭喜你，这是一条成功消息', type: 'success'});
             },
-            resetPassword() {
-                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            openResetPasswordTip() {
+                this.$confirm('此操作将重置用户密码, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$message({type: 'success', message: '删除成功!'});
+                    this.resetPassword();
                 }).catch(() => {
-                    this.$message({type: 'info', message: '已取消删除'});
+                    this.$message({type: 'info', message: '已取消重置'});
                 });
             },
             toUserBill() {
-                this.$router.push({path : '/platform/userBill', query: { uuid : '12138' }});
+                this.$router.push({path : '/platform/userBill', query: { id : this.$route.query.id }});
+            },
+            async getUserById() {
+                let data;
+                data = await user_getUserById(this.$route.query.id);
+                this.userDetailData.accountName = data.data.data.accountName;
+                this.userDetailData.accountCategory = data.data.data.accountCategory;
+                this.userDetailData.accountId = data.data.data.accountId;
+                this.userDetailData.contacts = data.data.data.contacts;
+                this.userDetailData.cellphoneNumber = data.data.data.cellphoneNumber;
+                this.userDetailData.remarksInformation = data.data.data.remarksInformation;
+                this.userDetailData.password = data.data.data.password;
+            },
+            async resetPassword() {
+                let data;
+                data = await user_resetPassword(this.$route.query.id);
+                console.log(data);
+                if(data.data.message === 'success'){
+                    this.$message({type: 'success', message: '重置成功!'});
+                    this.getUserById();
+                }
             }
+        },
+        mounted() {
+            this.getUserById();
         }
     }
 </script>

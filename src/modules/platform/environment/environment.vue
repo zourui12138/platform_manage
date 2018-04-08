@@ -83,7 +83,8 @@
                     class="fr"
                     background
                     layout="prev, pager, next"
-                    :total="totalPage"
+                    :total="totalElements"
+                    :page-size="pageSize"
                     @current-change="getTableData">
                 </el-pagination>
             </div>
@@ -101,9 +102,9 @@
         name: "monitorEnvironment",
         data() {
             return{
-                pageSize: 10,
+                pageSize: 5,
                 tableData: null,
-                totalPage: null,
+                totalElements: null,
                 countData: {
                     totalDFC: null,
                     startDFC: null,
@@ -121,7 +122,7 @@
                 let data;
                 data = await DFC_getTableData(page,this.pageSize);
                 this.tableData = data.data.data.content;
-                this.totalPage = data.data.data.totalPage;
+                this.totalElements = data.data.data.totalElements;
             },
             async getCountData() {
                 let data;

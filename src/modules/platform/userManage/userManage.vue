@@ -26,13 +26,20 @@
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" size="mini" @click="toDetail">详情</el-button>
+                        <el-button type="text" size="mini" @click="toDetail(scope.row.accountId)">详情</el-button>
                         <el-switch v-model="scope.row.enabledStatus === '1'"></el-switch>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="page clear">
-                <el-pagination class="fr" background layout="prev, pager, next" :total="1000"></el-pagination>
+                <el-pagination
+                    class="fr"
+                    background
+                    layout="prev, pager, next"
+                    :total="totalElements"
+                    :page-size="pageSize"
+                    @current-change="getTableData">
+                </el-pagination>
             </div>
         </div>
     </div>
@@ -45,24 +52,25 @@
         name: "user-manage",
         data() {
             return{
+                pageSize: 2,
+                totalElements: null,
                 tableData: null,
                 selected: '虚拟机总数'
             }
         },
         methods: {
-            toDetail() {
-                this.$router.push({path : '/platform/userManageDetail', query: { uuid : '12138' }});
+            toDetail(id) {
+                this.$router.push({path : '/platform/userManageDetail', query: { id : id }});
             },
-            async getTableData() {
+            async getTableData(page) {
                 let data;
-                data = await user_getTableData();
+                data = await user_getTableData(page,this.pageSize);
                 this.tableData = data.data.data;
-                //this.totalPage = data.data.data.totalPage;
-                console.log(data);
+                this.totalElements = data.data.total;
             }
         },
         mounted() {
-            this.getTableData();
+            this.getTableData(1);
         }
     }
 </script>
