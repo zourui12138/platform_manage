@@ -1,6 +1,11 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>平台总揽</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>平台总揽</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="count">
             <el-row :gutter="40">
                 <el-col :span="6">

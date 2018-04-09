@@ -1,6 +1,13 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>用户管理&nbsp;>>&nbsp;详情&nbsp;>>&nbsp;账单</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item to="/platform/userManage">用户管理</el-breadcrumb-item>
+                <el-breadcrumb-item to="/platform/userManageDetail">详情</el-breadcrumb-item>
+                <el-breadcrumb-item>账单</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <ul class="userBillTitle clear">
             <li class="fl">xxx虚拟机</li>
             <li class="fl"><img src="../../../assets/img/platform/userManage/integral.png" alt="">账户积分：333</li>

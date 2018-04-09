@@ -1,6 +1,11 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>数据目录</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>数据目录</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="directoryTitle clear">
             <el-button class="fr" size="small" type="primary" @click="openAddDialog(0)">新增</el-button>
         </div>

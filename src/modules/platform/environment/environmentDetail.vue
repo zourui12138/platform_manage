@@ -1,6 +1,12 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>环境管理&nbsp;>>&nbsp;详情</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item to="/platform/environment">环境管理</el-breadcrumb-item>
+                <el-breadcrumb-item>详情</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <ul class="virtualTitle clear">
             <li class="fl">{{detailData.vmName}}</li>
             <li class="fl"><img src="../../../assets/img/platform/environment/run.png" alt="">{{detailData.status ? '运行中' : '停止服务'}}</li>
@@ -43,7 +49,7 @@
     import { DFC_destroy } from "~/api/getData"
 
     export default {
-        name: "monitorEnvironment-detail",
+        name: "environment-detail",
         data() {
             return{
                 dataId: null,

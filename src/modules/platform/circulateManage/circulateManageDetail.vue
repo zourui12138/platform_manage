@@ -1,6 +1,12 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>流通管理</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item to="/platform/circulateManage">流通管理</el-breadcrumb-item>
+                <el-breadcrumb-item>详情</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="step clear">
             <div class="fl">
                 <div class="short fl"></div>
@@ -65,7 +71,7 @@
                 <p>使用时间：<span>2018.09.09  至  2018.10.10</span></p>
                 <p>合约号：<span>3455666777878</span><strong>还剩2小时20分钟&nbsp;自动销毁文件</strong></p>
                 <p>安全数据流通服务登录地址：<span>192.168.0.48</span></p>
-                <h1><el-button size="small" type="primary">查看合约</el-button><el-button size="small" type="primary">查看凭证</el-button></h1>
+                <h1><el-button size="small" type="primary" @click="toContract">查看合约</el-button><el-button size="small" type="primary" @click="toVoucher">查看凭证</el-button></h1>
             </div>
             <div class="title"><h1>交易生命周期</h1></div>
             <div class="cycle">
@@ -149,7 +155,15 @@
 
 <script>
     export default {
-        name: "circulate-manage-detail"
+        name: "circulate-manage-detail",
+        methods: {
+            toVoucher() {
+                this.$router.push({path : '/platform/circulateManageVoucher', query: { id : this.$route.query.id }});
+            },
+            toContract() {
+                this.$router.push({path : '/platform/circulateManageContract', query: { id : this.$route.query.id }});
+            }
+        }
     }
 </script>
 

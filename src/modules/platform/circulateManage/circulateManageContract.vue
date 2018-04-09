@@ -1,6 +1,13 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>流通管理</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item to="/platform/circulateManage">流通管理</el-breadcrumb-item>
+                <el-breadcrumb-item :to="detailPath">详情</el-breadcrumb-item>
+                <el-breadcrumb-item>合约</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="contractTitle">
             <h1>数据流通合约</h1>
             <p>数据提供方：<span>XXX公司</span></p>
@@ -23,7 +30,12 @@
 
 <script>
     export default {
-        name: "circulate-manage-contract"
+        name: "circulate-manage-contract",
+        computed: {
+            detailPath() {
+                return '/platform/circulateManageDetail?id='+this.$route.query.id
+            }
+        }
     }
 </script>
 

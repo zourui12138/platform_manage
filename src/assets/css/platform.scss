@@ -1,8 +1,18 @@
-/* title */
-.breadcrumb{
-    height: 64px;
+/* breadcrumb */
+.breadcrumbContainer{
     line-height: 64px;
-    font-size: 16px;
+    color: #9a9a9a;
+    .breadcrumb{
+        height: 64px;
+        line-height: 64px;
+        font-size: 16px;
+    }
+}
+.el-breadcrumb__inner, .el-breadcrumb__inner a{
+    font-weight: normal;
+    color: #9a9a9a;
+}
+.el-breadcrumb__item:last-child .el-breadcrumb__inner, .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover, .el-breadcrumb__item:last-child .el-breadcrumb__inner a, .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover{
     color: #9a9a9a;
 }
 /* .count */

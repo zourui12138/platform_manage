@@ -1,6 +1,11 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>用户管理</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="content">
             <div class="search">
                 <el-select size="medium" placeholder="请选择" v-model="selected">

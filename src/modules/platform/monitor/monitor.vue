@@ -1,6 +1,11 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>平台监控</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>平台监控</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <nav class="monitorMenu">
             <ul class="clear">
                 <li class="fl" :class="{current : blockChainMenu}" @click="toggleMonitorMenu('blockChain')">区块链网络服务监控</li>

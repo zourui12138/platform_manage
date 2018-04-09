@@ -1,6 +1,13 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>流通管理</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item to="/platform/circulateManage">流通管理</el-breadcrumb-item>
+                <el-breadcrumb-item :to="detailPath">详情</el-breadcrumb-item>
+                <el-breadcrumb-item>凭证</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="content clear">
             <ul class="contentLeft fl">
                 <li><div></div></li>
@@ -72,7 +79,12 @@
 
 <script>
     export default {
-        name: "circulate-manage-voucher"
+        name: "circulate-manage-voucher",
+        computed: {
+            detailPath() {
+                return '/platform/circulateManageDetail?id='+this.$route.query.id
+            }
+        }
     }
 </script>
 

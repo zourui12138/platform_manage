@@ -1,6 +1,11 @@
 <template>
     <div>
-        <header class="breadcrumb">所在位置：<span>环境管理</span></header>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>环境管理</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="count">
             <el-row :gutter="40">
                 <el-col :span="6">
@@ -99,7 +104,7 @@
     import { DFC_stop } from "~/api/getData"
 
     export default {
-        name: "monitorEnvironment",
+        name: "environment",
         data() {
             return{
                 pageSize: 5,
