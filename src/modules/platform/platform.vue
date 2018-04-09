@@ -15,7 +15,15 @@
             </VuePerfectScrollbar>
         </div>
         <section class="section fl">
-            <header class="header"></header>
+            <header class="header clear">
+                <ul class="fr">
+                    <li class="fl">您好！admin</li>
+                    <li class="fl"><img src="../../assets/img/platform/portrait.png" alt=""></li>
+                    <li class="fl"><img src="../../assets/img/platform/message.png" alt=""></li>
+                    <li class="fl"><img src="../../assets/img/platform/system.png" alt=""></li>
+                    <li class="fl"><img src="../../assets/img/platform/logout.png" alt=""></li>
+                </ul>
+            </header>
             <VuePerfectScrollbar class="main" v-scroll><router-view/></VuePerfectScrollbar>
         </section>
     </div>
@@ -122,8 +130,18 @@
             width: calc(100% - 295px);
             .header{
                 height: 94px;
+                line-height: 94px;
                 background-color: #fff;
                 border-bottom: 2px solid #f2f2f2;
+                padding: 0 20px;
+                font-size: 18px;
+                li{
+                    margin-left: 30px;
+                    img{
+                        vertical-align: middle;
+                        cursor: pointer;
+                    }
+                }
             }
             .main{
                 padding: 0 20px 20px;

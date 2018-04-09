@@ -5,12 +5,12 @@
             <span>数据流通平台</span>
         </header>
         <section class="main">
-            <div class="loginBox">
+            <div class="loginBox" @keydown.enter="login">
                 <ul>
                     <li>后台登录</li>
-                    <li class="clear"><span class="fl">用户名</span><input class="fl" type="text" placeholder="请输入用户名"></li>
-                    <li class="clear"><span class="fl">密&nbsp;&nbsp;&nbsp;&nbsp;码</span><input class="fl" type="password" placeholder="请输入用户名"></li>
-                    <li><button @click="loginSuccess">登录</button></li>
+                    <li class="clear"><span class="fl">用户名</span><input v-model="username" class="fl" type="text" placeholder="请输入用户名"></li>
+                    <li class="clear"><span class="fl">密&nbsp;&nbsp;&nbsp;&nbsp;码</span><input v-model="password" class="fl" type="password" placeholder="请输入用户名"></li>
+                    <li><button @click="login">登录</button></li>
                 </ul>
             </div>
         </section>
@@ -19,13 +19,33 @@
 
 <script>
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+    import { api_login } from "~/api/getData"
 
     export default {
         name: "login",
         components: {VuePerfectScrollbar},
+        data() {
+            return{
+                username: null,
+                password: null
+            }
+        },
         methods: {
-            loginSuccess() {
-                this.$router.push({path : '/platform/home'});
+            async login() {
+                if(this.username && this.password){
+                    let data;
+                    data = await api_login(this.username,this.password);
+                    data.data.status === 0 && this.$message.error('错了哦，用户名或密码错误');
+                    if(data.data.status === 0){
+                        this.$message.error('错了哦，用户名或密码错误');
+                    }else{
+                        this.$message.success('登录成功');
+                        this.$router.push({path : '/platform/home'});
+                    }
+
+                }else{
+                    this.$message.error('错了哦，用户名或密码不能为空');
+                }
             }
         }
     }
