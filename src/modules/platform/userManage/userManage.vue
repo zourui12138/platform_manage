@@ -52,7 +52,7 @@
         name: "user-manage",
         data() {
             return{
-                pageSize: 2,
+                pageSize: 10,
                 totalElements: null,
                 tableData: null,
                 selected: '虚拟机总数'

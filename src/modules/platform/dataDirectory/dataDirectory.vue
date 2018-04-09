@@ -1,7 +1,7 @@
 <template>
     <div>
         <header class="breadcrumb">所在位置：<span>数据目录</span></header>
-        <div class="title clear">
+        <div class="directoryTitle clear">
             <el-button class="fr" size="small" type="primary" @click="openAddDialog(0)">新增</el-button>
         </div>
         <div class="content">
@@ -10,6 +10,7 @@
                     <header class="clear">
                         <img class="fl" src="../../../assets/img/platform/dataDirectory/folder.png" alt="">
                         <span class="fl">{{i.dataDirectoryName}}</span>
+                        <strong class="fl">{{'('+i.totalChildrens+')'}}</strong>
                         <div class="fr">
                             <el-button type="text" @click="openAddDialog(i.dataDirectoryId)">新增子类</el-button>
                             <el-button type="text" @click="openSetDialog(i.dataDirectoryName,i.dataDirectoryId,i.parentDataDirectoryId)">修改</el-button>
@@ -17,7 +18,15 @@
                         </div>
                     </header>
                     <el-row class="secondDirectory">
-                        <el-col :span="3" v-for="j in i.childrens" :key="j.dataDirectoryId"><p class="clear"><span>{{j.dataDirectoryName}}</span><i class="el-icon-edit fr" @click="openSetDialog(j.dataDirectoryName,j.dataDirectoryId,j.parentDataDirectoryId)"></i><i class="el-icon-delete fr" @click="openDeleteDialog(j.dataDirectoryId)"></i></p></el-col>
+                        <el-col :span="4" v-for="j in i.childrens" :key="j.dataDirectoryId">
+                            <p class="clear">
+                                <img class="fl" src="../../../assets/img/platform/dataDirectory/folder_small.png" alt="">
+                                <span class="fl" :title="j.dataDirectoryName">{{j.dataDirectoryName}}</span>
+                                <strong class="fl">{{'('+j.totalChildrens+')'}}</strong>
+                                <i class="el-icon-edit fr" @click="openSetDialog(j.dataDirectoryName,j.dataDirectoryId,j.parentDataDirectoryId)"></i>
+                                <i class="el-icon-delete fr" @click="openDeleteDialog(j.dataDirectoryId)"></i>
+                            </p>
+                        </el-col>
                     </el-row>
                 </li>
             </ul>
@@ -157,7 +166,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .title{
+    .directoryTitle{
         padding: 14px 30px;
         background-color: #fff;
     }
@@ -169,13 +178,15 @@
             header{
                 height: 50px;
                 line-height: 50px;
-                background-color: #ecf3fd;
                 padding: 0 30px;
                 cursor: pointer;
                 img{
                     vertical-align: top;
                     margin-top: 9px;
-                    margin-right: 20px;
+                    margin-right: 10px;
+                }
+                span{
+                    margin-right: 10px;
                 }
                 div{
                     display: none;
@@ -190,16 +201,29 @@
                     display: block;
                 }
             }
+            strong{
+                font-weight: normal;
+                margin-left: 4px;
+            }
             .secondDirectory{
                 padding: 0 50px;
                 p{
-                    height: 30px;
-                    line-height: 30px;
+                    height: 40px;
+                    line-height: 40px;
                     padding: 0 10px;
                     cursor: pointer;
                     margin: 5px 0;
+                    img{
+                        margin: 12px 10px 12px 0;
+                    }
+                    span{
+                        width: 120px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
                     i{
-                        margin-top: 8px;
+                        margin-top: 13px;
                         margin-left: 4px;
                         display: none;
                     }

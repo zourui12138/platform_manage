@@ -15,46 +15,46 @@
                 </el-select>
                 <el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
             </div>
-            <ul class="billList">
-                <li class="clear">
-                    <div>
+            <ul>
+                <li class="title">
+                    <h1 class="clear">
                         <span class="fl">2018-09-09</span>
                         <span class="fl">购买数据-xxxx大数据公司</span>
                         <span class="fr">余额：20积分</span>
                         <span class="fr">+10积分</span>
-                    </div>
+                    </h1>
                 </li>
-                <li class="clear">
-                    <div>
+                <li class="title">
+                    <h1 class="clear">
                         <span class="fl">2018-09-09</span>
                         <span class="fl">购买数据-xxxx大数据公司</span>
                         <span class="fr">余额：20积分</span>
                         <span class="fr">+10积分</span>
-                    </div>
+                    </h1>
                 </li>
-                <li class="clear">
-                    <div>
+                <li class="title">
+                    <h1 class="clear">
                         <span class="fl">2018-09-09</span>
                         <span class="fl">购买数据-xxxx大数据公司</span>
                         <span class="fr">余额：20积分</span>
                         <span class="fr">+10积分</span>
-                    </div>
+                    </h1>
                 </li>
-                <li class="clear">
-                    <div>
+                <li class="title">
+                    <h1 class="clear">
                         <span class="fl">2018-09-09</span>
                         <span class="fl">购买数据-xxxx大数据公司</span>
                         <span class="fr">余额：20积分</span>
                         <span class="fr">+10积分</span>
-                    </div>
+                    </h1>
                 </li>
-                <li class="clear">
-                    <div>
+                <li class="title">
+                    <h1 class="clear">
                         <span class="fl">2018-09-09</span>
                         <span class="fl">购买数据-xxxx大数据公司</span>
                         <span class="fr">余额：20积分</span>
                         <span class="fr">+10积分</span>
-                    </div>
+                    </h1>
                 </li>
             </ul>
         </div>
@@ -86,21 +86,10 @@
             margin: 18px 10px 0 50px;
         }
     }
-    .billList{
-        li{
-            padding: 15px 0;
-            background-color: #f3f7ff;
-            margin-bottom: 10px;
-            div{
-                height: 20px;
-                line-height: 20px;
-                border-left:2px solid #5a8bff;
-                font-size: 14px;
-                padding-left:20px;
-                span{
-                    margin-right: 20px;
-                }
-            }
+    .title{
+        margin-top: 0;
+        span{
+            margin-right: 16px;
         }
     }
 </style>

@@ -54,6 +54,7 @@
                     case 'circulateManage' : this.asideCirculateManageNav = true;break;
                     case 'circulateManageDetail' : this.asideCirculateManageNav = true;break;
                     case 'circulateManageVoucher' : this.asideCirculateManageNav = true;break;
+                    case 'circulateManageContract' : this.asideCirculateManageNav = true;break;
                     case 'userManage' : this.asideUserManageNav = true;break;
                     case 'userManageDetail' : this.asideUserManageNav = true;break;
                     case 'userBill' : this.asideUserManageNav = true;break;

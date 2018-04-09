@@ -200,22 +200,11 @@
     }
     .content{
         .title{
-            padding: 15px 0;
-            background-color: #f3f7ff;
-            margin-bottom: 10px;
-            margin-top: 30px;
-            h1{
-                height: 20px;
-                line-height: 20px;
-                border-left:2px solid #5a8bff;
-                font-size: 14px;
-                padding-left: 14px;
-                strong{
-                    font-weight: normal;
-                    padding-left: 30px;
-                    background: url('../../../assets/img/platform/circulateManage/icon.png') no-repeat 0 center;
-                    margin-left: 50px;
-                }
+            strong{
+                font-weight: normal;
+                padding-left: 30px;
+                background: url('../../../assets/img/platform/circulateManage/icon.png') no-repeat 0 center;
+                margin-left: 50px;
             }
         }
         .dataMsg{

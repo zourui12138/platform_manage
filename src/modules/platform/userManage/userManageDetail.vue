@@ -2,7 +2,7 @@
     <div>
         <header class="breadcrumb">所在位置：<span>用户管理&nbsp;>>&nbsp;详情</span></header>
         <div class="userMsg">
-            <div class="userMsgTitle"><h1>数据流通信息</h1></div>
+            <div class="title"><h1>数据流通信息</h1></div>
             <el-row>
                 <el-col :span="8">
                     <div class="userMsgBox clear">
@@ -41,7 +41,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <div class="userMsgTitle" style="margin-top: 20px"><h1>基础环境信息</h1></div>
+            <div class="title" style="margin-top: 20px"><h1>基础环境信息</h1></div>
             <div class="userMsgBox clear">
                 <span class="fl">用户密码：</span>
                 <el-input v-model="userDetailData.password" class="fl" size="small" :disabled="true"></el-input>
@@ -170,17 +170,6 @@
         background-color: #fff;
         border: 1px solid #ebecf0;
         border-top: none;
-        .userMsgTitle{
-            padding: 15px 0;
-            background-color: #f3f7ff;
-            margin-bottom: 10px;
-            h1{
-                height: 20px;
-                border-left:2px solid #5a8bff;
-                font-size: 14px;
-                padding-left: 14px;
-            }
-        }
         .userMsgBox{
             line-height: 50px;
             padding: 0 16px;

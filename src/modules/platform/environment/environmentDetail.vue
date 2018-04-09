@@ -14,14 +14,14 @@
             </li>
         </ul>
         <div class="virtualMsg">
-            <div class="virtualMsgTitle"><h1>数据流通信息</h1></div>
+            <div class="title"><h1>数据流通信息</h1></div>
             <p>数据名称：<span>{{detailData.dataName}}</span></p>
             <p>数据使用方：<span>{{detailData.dataUserName}}</span></p>
             <p>数据提供方：<span>{{detailData.dataMasterName}}</span></p>
             <p>数据流通合约号：<span>{{detailData.contractId}}</span></p>
             <p>虚拟机启用时间：<span>{{detailData.createAt}}</span></p>
             <p>虚拟机销毁时间：<span>{{detailData.destroyAt}}</span></p>
-            <div class="virtualMsgTitle"><h1>基础环境信息</h1></div>
+            <div class="title"><h1>基础环境信息</h1></div>
             <el-row>
                 <el-col :span="8"><p>操作系统：<span>{{detailData.system}}</span></p></el-col>
                 <el-col :span="8"><p>图形界面协议：<span>{{detailData.viewType}}</span></p></el-col>
@@ -166,17 +166,6 @@
         background-color: #fff;
         border: 1px solid #ebecf0;
         border-top: none;
-        .virtualMsgTitle{
-            padding: 15px 0;
-            background-color: #f3f7ff;
-            margin-bottom: 10px;
-            h1{
-                height: 20px;
-                border-left:2px solid #5a8bff;
-                font-size: 14px;
-                padding-left: 14px;
-            }
-        }
         p{
             line-height: 40px;
             font-size: 14px;
