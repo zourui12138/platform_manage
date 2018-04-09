@@ -12,7 +12,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/api': {
-                target: 'http://192.168.125.3:8090',
+                target: 'http://192.168.125.178:8080',
                 changeOrigin: true,
                 pathRewrite: {'^/api': ''}
             }

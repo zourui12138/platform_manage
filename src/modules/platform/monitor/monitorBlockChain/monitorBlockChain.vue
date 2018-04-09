@@ -21,29 +21,17 @@
             </el-row>
         </div>
         <div class="content">
-            <div class="search">
-                <el-select placeholder="请选择" v-model="selected">
-                    <el-option label="全部" value="全部"></el-option>
-                </el-select>
-                <el-input placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
-            </div>
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
-                <el-table-column prop="name" label="名称"></el-table-column>
-                <el-table-column prop="host" label="主机"></el-table-column>
-                <el-table-column prop="ip" label="ip地址"></el-table-column>
-                <el-table-column prop="cluster" label="群集"></el-table-column>
-                <el-table-column prop="dataCenter" label="数据中心"></el-table-column>
-                <el-table-column prop="memory" label="内存"></el-table-column>
-                <el-table-column prop="cpu" label="CPU"></el-table-column>
-                <el-table-column prop="network" label="网络"></el-table-column>
-                <el-table-column prop="date" label="使用时间"></el-table-column>
-                <el-table-column prop="user" label="使用方"></el-table-column>
-                <el-table-column label="状态">
+                <el-table-column prop="name" label="节点名称"></el-table-column>
+                <el-table-column label="节点状态">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.status }}</span>
-                        <el-switch v-model="scope.row.status === '使用中'"></el-switch>
+                        <span>{{scope.row.state === 'running' ? '运行中' : '已停止'}}</span>
                     </template>
                 </el-table-column>
+                <el-table-column prop="ip" label="ip地址"></el-table-column>
+                <el-table-column prop="port" label="端口"></el-table-column>
+                <el-table-column prop="platform" label="区块链平台"></el-table-column>
+                <el-table-column prop="version" label="区块链版本"></el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button type="text" size="mini" @click="toDetail">详情</el-button>
@@ -58,149 +46,32 @@
 </template>
 
 <script>
+    import { blockChain_getTableData } from "~/api/getData"
+
     export default {
         name: "monitor-block-chain",
         data() {
             return{
-                tableData: [
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    }
-                ],
+                tableData: [],
                 selected: '全部'
             }
         },
         methods: {
             toDetail() {
                 this.$router.push({path : '/platform/monitor/blockChainDetail', query: { uuid : '12138' }});
+            },
+            async getTableData() {
+                let data;
+                data = await blockChain_getTableData();
+                if(data.data.message === 'success'){
+                    for(let i=0; i<data.data.data.length; i++){
+                        this.tableData.push(data.data.data[i][0]);
+                    }
+                }
             }
+        },
+        mounted() {
+            this.getTableData();
         }
     }
 </script>
@@ -210,5 +81,8 @@
         img{
             margin:35px 34px 35px 0;
         }
+    }
+    .content{
+        padding-top: 30px;
     }
 </style>
