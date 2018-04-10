@@ -3,8 +3,25 @@
 </template>
 
 <script>
+    import { interceptor } from "~/api/getData"
+
     export default {
-        name: 'App'
+        name: 'App',
+        methods: {
+            async errorCallback() {
+                await interceptor(() => {
+                    this.$loading({
+                        lock: true,
+                        text: '服务器连接超时，请刷新页面重新连接',
+                        spinner: 'el-icon-loading',
+                        background: 'rgba(0, 0, 0, 0.7)'
+                    });
+                });
+            }
+        },
+        created() {
+            this.errorCallback();
+        }
     }
 </script>
 
