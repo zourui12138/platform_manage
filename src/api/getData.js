@@ -22,6 +22,25 @@ export const user_getTableData = (page,size) => axios.post(api+'/account/queryBy
 });
 export const user_getUserById = (id) => axios.get(api+'/account/getAccountById?accountId='+id);
 export const user_resetPassword = (id) => axios.get(api+'/account/resetUserPassword?accountId='+id);
+export const user_enabled = (id,status) => axios.put(api+'/account/enabled',{
+    accountId: id,
+    enabledStatus: status
+});
+export const user_getCategory = () => axios.get(api+'/account/getAccountCategorys');
+export const user_recharge = (id,amount,comment) => axios.put(api+'/account/jifcz',{
+    count: amount,
+    userId: id,
+    remaker: comment
+});
+export const user_getBillData = (id,page,size) => axios.post(api+'/account/bill',{
+    limit: {
+        size: size,
+        startNumber: (page-1)*size
+    },
+    param: {
+        id: id
+    }
+});
 // 数据目录
 export const dataDirectory_getTableData = () => axios.get(api+'/dataDirectory/queryAll');
 export const dataDirectory_addDataDirectory = (name,parentId) => axios.post(api+'/dataDirectory/add',{

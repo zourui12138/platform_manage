@@ -128,3 +128,12 @@
         padding-left: 14px;
     }
 }
+/* .inputNumber */
+.inputNumber input[type=number] {
+    -moz-appearance:textfield;
+}
+.inputNumber input[type=number]::-webkit-inner-spin-button,
+.inputNumber input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

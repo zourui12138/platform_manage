@@ -55,7 +55,11 @@
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">帐号状态：</span>
-                <el-switch v-model="userDetailData.status" active-text="开通" inactive-text="关闭"></el-switch>
+                <el-switch
+                    v-model="userDetailData.enabledStatus"
+                    active-text="启用" inactive-text="禁用"
+                    @change="enabled">
+                </el-switch>
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">积分用户：</span>
@@ -78,7 +82,7 @@
             :visible.sync="dialogVisible">
             <el-form :model="dialogData" label-width="90px">
                 <el-form-item label="充值金额：">
-                    <el-input v-model="dialogData.money" placeholder="请输入充值金额"></el-input>
+                    <el-input v-model="dialogData.money" class="inputNumber" type="number" placeholder="请输入充值金额"></el-input>
                 </el-form-item>
                 <el-form-item label="充值备注：">
                     <el-input v-model="dialogData.comment" placeholder="请输入充值备注"></el-input>
@@ -86,7 +90,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button size="small" @click="closeDialog">取 消</el-button>
-                <el-button size="small" type="primary" @click="submitDialog">确 定</el-button>
+                <el-button size="small" type="primary" @click="recharge">确 定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -95,6 +99,8 @@
 <script>
     import { user_getUserById } from "~/api/getData"
     import { user_resetPassword } from "~/api/getData"
+    import { user_enabled } from "~/api/getData"
+    import { user_recharge } from "~/api/getData"
 
     export default {
         name: "user-manage-detail",
@@ -109,7 +115,7 @@
                     cellphoneNumber: null,
                     remarksInformation: null,
                     password: null,
-                    status: null
+                    enabledStatus: null
                 },
                 dialogData: {
                     money: null,
@@ -123,11 +129,7 @@
             },
             closeDialog() {
                 this.dialogVisible = false;
-                this.$message('这是一条消息提示');
-            },
-            submitDialog() {
-                this.dialogVisible = false;
-                this.$message({message: '恭喜你，这是一条成功消息', type: 'success'});
+                this.$message('取消积分充值');
             },
             openResetPasswordTip() {
                 this.$confirm('此操作将重置用户密码, 是否继续?', '提示', {
@@ -146,21 +148,33 @@
             async getUserById() {
                 let data;
                 data = await user_getUserById(this.$route.query.id);
-                this.userDetailData.accountName = data.data.data.accountName;
-                this.userDetailData.accountCategory = data.data.data.accountCategory;
-                this.userDetailData.accountId = data.data.data.accountId;
-                this.userDetailData.contacts = data.data.data.contacts;
-                this.userDetailData.cellphoneNumber = data.data.data.cellphoneNumber;
-                this.userDetailData.remarksInformation = data.data.data.remarksInformation;
-                this.userDetailData.password = data.data.data.password;
+                this.userDetailData = data.data.data;
+                this.userDetailData.enabledStatus = data.data.data.enabledStatus === '1' ?  true : false;
             },
             async resetPassword() {
                 let data;
                 data = await user_resetPassword(this.$route.query.id);
-                console.log(data);
                 if(data.data.message === 'success'){
                     this.$message({type: 'success', message: '重置成功!'});
                     this.getUserById();
+                }
+            },
+            async enabled(arg){
+                let data,targetStatus;
+                targetStatus = arg ? '1' : '2';
+                data = await user_enabled(this.$route.query.id,targetStatus);
+                data.data.status === 1 && (this.$message.success('修改帐号状态成功'));
+            },
+            async recharge() {
+                if(this.dialogData.money){
+                    let data;
+                    data = await user_recharge(this.$route.query.id,this.dialogData.money,this.dialogData.comment);
+                    this.dialogVisible = false;
+                    this.dialogData.money = null;
+                    this.dialogData.comment = null;
+                    this.$message.success('积分充值成功');
+                }else{
+                    this.$message.error('充值积分不能为空');
                 }
             }
         },

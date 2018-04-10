@@ -37,12 +37,6 @@
         data() {
             return{}
         },
-        mounted(){
-            this.gauge();
-            this.barVertical();
-            this.pie();
-            this.line();
-        },
         methods: {
             gauge() {
                 // 基于准备好的dom，初始化echarts实例
@@ -228,6 +222,12 @@
                 // 绘制图表
                 myChart.setOption(option);
             }
+        },
+        mounted(){
+            this.gauge();
+            this.barVertical();
+            this.pie();
+            this.line();
         }
     }
 </script>

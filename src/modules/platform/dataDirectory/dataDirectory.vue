@@ -7,7 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="directoryTitle clear">
-            <el-button class="fr" size="small" type="primary" @click="openAddDialog(0)">新增</el-button>
+            <el-button class="fr" size="small" type="primary" @click="openAddDialog(0)">新增父类</el-button>
         </div>
         <div class="content">
             <ul class="directoryList">
@@ -131,6 +131,7 @@
                 data = await dataDirectory_addDataDirectory(this.addDialogData,this.addParentId);
                 if(data.data.message === 'success'){
                     this.addDialogTitleUI = false;
+                    this.addDialogData = null;
                     this.$message({type: 'success', message: '新增目录名称完成'});
                     this.getCountData();
                 }
