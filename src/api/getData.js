@@ -1,4 +1,6 @@
 import axios from 'axios'
+// 统一配置请求时间限制
+axios.defaults.timeout = 4000;
 
 const api = '/api';
 // 登录系统
