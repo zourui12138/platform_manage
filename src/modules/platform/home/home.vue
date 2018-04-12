@@ -134,6 +134,7 @@
 <script>
     import { DFC_getTableData } from "~/api/getData"
     import { DFC_getCountData } from "~/api/getData"
+    import { blockChain_getCountData } from "~/api/getData"
 
     export default {
         name: "home",
@@ -335,10 +336,15 @@
                 this.tableData = data.data.data.content;
                 this.totalElements = data.data.data.totalElements;
             },
-            async getCountData() {
+            async getDFCCountData() {
                 let data;
                 data = await DFC_getCountData();
                 this.countData = data.data.data;
+            },
+            async getBlockChainCountData() {
+                let data;
+                data = await blockChain_getCountData();
+                console.log(data);
             }
         },
         mounted(){
@@ -346,7 +352,8 @@
             this.barVertical();
             this.barHorizontal();
             this.getTableData(1);
-            this.getCountData();
+            this.getDFCCountData();
+            this.getBlockChainCountData();
         }
     }
 </script>

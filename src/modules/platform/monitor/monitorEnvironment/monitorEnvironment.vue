@@ -58,7 +58,7 @@
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
                 <el-table-column prop="vmName" label="名称"></el-table-column>
                 <el-table-column prop="hostName" label="主机"></el-table-column>
-                <el-table-column prop="ip" label="ip地址"></el-table-column>
+                <el-table-column prop="ip" label="ip地址" width="150"></el-table-column>
                 <el-table-column prop="cluster" label="群集"></el-table-column>
                 <el-table-column prop="dataCenter" label="数据中心"></el-table-column>
                 <el-table-column prop="memoryUsage" label="内存"></el-table-column>

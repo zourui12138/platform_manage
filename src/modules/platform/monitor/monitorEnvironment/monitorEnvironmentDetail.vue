@@ -23,7 +23,7 @@
                     <div class="chartBox" ref="chartPie"></div>
                 </el-col>
                 <el-col :span="24">
-                    <h1>IO&nbsp;Await</h1>
+                    <h1>网络接收数据</h1>
                     <div class="chartBox" ref="chartLine"></div>
                 </el-col>
             </el-row>
@@ -32,19 +32,25 @@
 </template>
 
 <script>
+    import { DFC_getMonitorById } from "~/api/getData"
+
     export default {
         name: "monitor-environment-detail",
         data() {
-            return{}
-        },
-        mounted(){
-            this.gauge();
-            this.barVertical();
-            this.pie();
-            this.line();
+            return{
+                barData: {
+                    x: ['','','','','','',''],
+                    y: [0,0,0,0,0,0,0]
+                },
+                lineData: {
+                    x: ['','','','','','',''],
+                    y: [0,0,0,0,0,0,0]
+                },
+                timer: null
+            }
         },
         methods: {
-            gauge() {
+            gauge(value) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartGauge);
                 // 图标配置项
@@ -85,22 +91,25 @@
                                     color: 'auto'
                                 }
                             },
-                            detail: {formatter:'{value}%'},
-                            data: [{value: 76}]
+                            detail: {
+                                fontSize: 18,
+                                formatter:'{value}%'
+                            },
+                            data: [{value: value}]
                         }
                     ]
                 };
                 // 绘制图表
                 myChart.setOption(option);
             },
-            barVertical() {
+            barVertical(x,y) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartBarVertical);
                 // 图标配置项
                 let option = {
                     color: ['#5a8bff'],
                     title: {
-                        text: '数据流通统计',
+                        text: 'CPU使用率时段统计',
                         textStyle: {
                             color: '#606266',
                             fontSize: 16,
@@ -123,7 +132,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            data : x,
                             axisTick: {
                                 alignWithLabel: true
                             }
@@ -147,14 +156,14 @@
                                     {type : 'max', name: '最大值'}
                                 ]
                             },
-                            data:[10, 52, 200, 334, 390, 330, 220]
+                            data: y
                         }
                     ]
                 };
                 // 绘制图表
                 myChart.setOption(option);
             },
-            pie() {
+            pie(use,unUse) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartPie);
                 // 图标配置项
@@ -183,8 +192,8 @@
 
                             },
                             data:[
-                                {value:335, name:'已使用内存'},
-                                {value:310, name:'未使用内存'}
+                                {value:use, name:'已使用内存'},
+                                {value:unUse, name:'未使用内存'}
                             ]
                         }
                     ]
@@ -192,7 +201,7 @@
                 // 绘制图表
                 myChart.setOption(option);
             },
-            line() {
+            line(x,y) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartLine);
                 // 图标配置项
@@ -207,14 +216,14 @@
                     xAxis: {
                         type: 'category',
                         boundaryGap: false,
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        data: x
                     },
                     yAxis: {
                         type: 'value'
                     },
                     series: [
                         {
-                            data: [40, 50, 70, 30, 40, 80, 70],
+                            data: y,
                             type: 'line',
                             smooth: true,
                             areaStyle: {
@@ -227,13 +236,39 @@
                 };
                 // 绘制图表
                 myChart.setOption(option);
+            },
+            async getMonitorById() {
+                let data = await DFC_getMonitorById(this.$route.query.id);
+                console.log(data);
+                this.gauge(data.data.data.cpu);
+                this.pie(data.data.data.memUsed,data.data.data.memTotal-data.data.data.memUsed);
+                this.barData.x.shift();
+                this.barData.y.shift();
+                this.barData.x.push(data.data.data.monitorAt);
+                this.barData.y.push(data.data.data.cpu);
+                this.barVertical(this.barData.x,this.barData.y);
+                this.lineData.x.shift();
+                this.lineData.y.shift();
+                this.lineData.x.push(data.data.data.monitorAt);
+                this.lineData.y.push(data.data.data.netTotalReceived);
+                this.line(this.lineData.x,this.lineData.y);
             }
+        },
+        mounted(){
+            this.getMonitorById();
+            this.timer = setInterval(this.getMonitorById,3000);
+        },
+        beforeRouteLeave (to, from, next) {
+            // 导航离开该组件的对应路由时调用
+            // 可以访问组件实例 `this`
+            this.timer && clearInterval(this.timer);
+            next();
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .title{
+    .monitorTitle{
         height: 60px;
         line-height: 60px;
         font-size: 14px;
