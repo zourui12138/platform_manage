@@ -22,10 +22,11 @@
                         <el-col :span="12"><p>区块高度：<span>{{i.height}}</span></p></el-col>
                         <el-col :span="12"><p>创建时间：<span>{{i.time}}</span></p></el-col>
                     </el-row>
-                    <div class="fl contentRightVideo"></div>
+                    <div class="fl contentRightVideo" @click="saveVideoUrl(i.url)"></div>
                 </li>
             </ul>
         </div>
+        <router-view/>
     </div>
 </template>
 
@@ -48,7 +49,12 @@
             async getVoucher() {
                 let data = await circulateManage_getVoucher(this.$route.query.id);
                 this.voucherData = data.data.data;
-            }
+            },
+            saveVideoUrl(url) {
+                sessionStorage.setItem('url', url);
+                this.$router.push({path : '/platform/circulateManageVoucher/circulateManageVideo',
+                    query: { uuid : this.$route.query.uuid ,id : this.$route.query.id }});
+            },
         },
         mounted() {
             this.getVoucher();
