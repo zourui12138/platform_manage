@@ -33,7 +33,9 @@
 <script type="text/javascript" src="playback.js"></script>
 <script>
   //var name = window.parent.document.URL.split('name=')[1];
-  initExamplePlayer(sessionStorage.getItem('url'))
+  let recording = initExamplePlayer(sessionStorage.getItem('url'));
+  console.log(recording);
+  recording.play();
 </script>
 </body>
 </html>

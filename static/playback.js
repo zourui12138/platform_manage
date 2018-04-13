@@ -223,4 +223,6 @@ function initExamplePlayer(url) {
         player.className = 'seeking';
 
     };
+
+    return recording;
 }
