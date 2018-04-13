@@ -17,17 +17,15 @@
                 <el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
             </div>
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
-                <el-table-column prop="contractNum" label="合约号"></el-table-column>
-                <el-table-column prop="hostName" label="合约时间"></el-table-column>
-                <el-table-column prop="ip" label="提供方"></el-table-column>
-                <el-table-column prop="cluster" label="需求方"></el-table-column>
-                <el-table-column prop="dataCenter" label="生效时间"></el-table-column>
-                <el-table-column prop="createAt" label="流通积分"></el-table-column>
-                <el-table-column prop="dataUserName" label="流通状态"></el-table-column>
-                <el-table-column prop="dataUserName" label="哈希值"></el-table-column>
+                <el-table-column prop="contractRecordId" label="合约号"></el-table-column>
+                <el-table-column prop="partA" label="提供方"></el-table-column>
+                <el-table-column prop="partB" label="需求方"></el-table-column>
+                <el-table-column prop="signtime" label="生效时间"></el-table-column>
+                <el-table-column prop="points" label="流通积分"></el-table-column>
+                <el-table-column prop="hash" label="哈希值"></el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" size="mini" @click="toDetail(scope.row.id)">详情</el-button>
+                        <el-button type="text" size="mini" @click="toDetail(scope.row.contractRecordId)">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -46,17 +44,14 @@
 </template>
 
 <script>
+    import { circulateManage_getTableData } from '~/api/getData'
+
     export default {
         name: "circulate-manage",
         data() {
             return{
-                pageSize: 5,
-                tableData: [
-                    {
-                        id: 1,
-                        contractNum: '123456789'
-                    }
-                ],
+                pageSize: 10,
+                tableData: null,
                 totalElements: null,
                 selected: '虚拟机总数'
             }
@@ -67,10 +62,13 @@
             },
             async getTableData(page) {
                 let data;
-                data = await DFC_getTableData(page,this.pageSize);
-                this.tableData = data.data.data.content;
-                this.totalElements = data.data.data.totalElements;
+                data = await circulateManage_getTableData(page,this.pageSize);
+                this.tableData = data.data.data;
+                this.totalElements = data.data.total;
             }
+        },
+        mounted() {
+            this.getTableData(1);
         }
     }
 </script>

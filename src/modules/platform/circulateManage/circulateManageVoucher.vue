@@ -10,65 +10,17 @@
         </div>
         <div class="content clear">
             <ul class="contentLeft fl">
-                <li><div></div></li>
-                <li><div></div></li>
-                <li><div></div></li>
-                <li><div></div></li>
-                <li><div></div></li>
+                <li v-for="i in voucherData"><div></div></li>
             </ul>
             <ul class="contentRight fl">
-                <li class="clear">
+                <li class="clear" v-for="i in voucherData">
                     <el-row class="fl contentRightMsg">
-                        <el-col :span="24"><h2>2018.03.03 12:33:21</h2></el-col>
-                        <el-col :span="24"><h1>名称：<span>46778452156</span></h1></el-col>
+                        <el-col :span="24"><h2>{{i.time}}</h2></el-col>
+                        <el-col :span="24"><h1>名称：<span>{{i.name}}</span></h1></el-col>
                         <el-col :span="24"><p>所在区块信息</p></el-col>
-                        <el-col :span="24"><p>哈希值：<span>5a6s5s586wf2s5e56a5656daf5656321245451562</span></p></el-col>
-                        <el-col :span="12"><p>区块高度：<span>3456</span></p></el-col>
-                        <el-col :span="12"><p>创建时间：<span>2018.03.03 21:33</span></p></el-col>
-                    </el-row>
-                    <div class="fl contentRightVideo"></div>
-                </li>
-                <li class="clear">
-                    <el-row class="fl contentRightMsg">
-                        <el-col :span="24"><h2>2018.03.03 12:33:21</h2></el-col>
-                        <el-col :span="24"><h1>名称：<span>46778452156</span></h1></el-col>
-                        <el-col :span="24"><p>所在区块信息</p></el-col>
-                        <el-col :span="24"><p>哈希值：<span>5a6s5s586wf2s5e56a5656daf5656321245451562</span></p></el-col>
-                        <el-col :span="12"><p>区块高度：<span>3456</span></p></el-col>
-                        <el-col :span="12"><p>创建时间：<span>2018.03.03 21:33</span></p></el-col>
-                    </el-row>
-                    <div class="fl contentRightVideo"></div>
-                </li>
-                <li class="clear">
-                    <el-row class="fl contentRightMsg">
-                        <el-col :span="24"><h2>2018.03.03 12:33:21</h2></el-col>
-                        <el-col :span="24"><h1>名称：<span>46778452156</span></h1></el-col>
-                        <el-col :span="24"><p>所在区块信息</p></el-col>
-                        <el-col :span="24"><p>哈希值：<span>5a6s5s586wf2s5e56a5656daf5656321245451562</span></p></el-col>
-                        <el-col :span="12"><p>区块高度：<span>3456</span></p></el-col>
-                        <el-col :span="12"><p>创建时间：<span>2018.03.03 21:33</span></p></el-col>
-                    </el-row>
-                    <div class="fl contentRightVideo"></div>
-                </li>
-                <li class="clear">
-                    <el-row class="fl contentRightMsg">
-                        <el-col :span="24"><h2>2018.03.03 12:33:21</h2></el-col>
-                        <el-col :span="24"><h1>名称：<span>46778452156</span></h1></el-col>
-                        <el-col :span="24"><p>所在区块信息</p></el-col>
-                        <el-col :span="24"><p>哈希值：<span>5a6s5s586wf2s5e56a5656daf5656321245451562</span></p></el-col>
-                        <el-col :span="12"><p>区块高度：<span>3456</span></p></el-col>
-                        <el-col :span="12"><p>创建时间：<span>2018.03.03 21:33</span></p></el-col>
-                    </el-row>
-                    <div class="fl contentRightVideo"></div>
-                </li>
-                <li class="clear">
-                    <el-row class="fl contentRightMsg">
-                        <el-col :span="24"><h2>2018.03.03 12:33:21</h2></el-col>
-                        <el-col :span="24"><h1>名称：<span>46778452156</span></h1></el-col>
-                        <el-col :span="24"><p>所在区块信息</p></el-col>
-                        <el-col :span="24"><p>哈希值：<span>5a6s5s586wf2s5e56a5656daf5656321245451562</span></p></el-col>
-                        <el-col :span="12"><p>区块高度：<span>3456</span></p></el-col>
-                        <el-col :span="12"><p>创建时间：<span>2018.03.03 21:33</span></p></el-col>
+                        <el-col :span="24"><p>哈希值：<span>{{i.hash}}</span></p></el-col>
+                        <el-col :span="12"><p>区块高度：<span>{{i.height}}</span></p></el-col>
+                        <el-col :span="12"><p>创建时间：<span>{{i.time}}</span></p></el-col>
                     </el-row>
                     <div class="fl contentRightVideo"></div>
                 </li>
@@ -78,12 +30,28 @@
 </template>
 
 <script>
+    import { circulateManage_getVoucher } from '~/api/getData'
+
     export default {
         name: "circulate-manage-voucher",
+        data() {
+            return{
+                voucherData: null
+            }
+        },
         computed: {
             detailPath() {
-                return '/platform/circulateManageDetail?id='+this.$route.query.id
+                return '/platform/circulateManageDetail?id='+this.$route.query.uuid
             }
+        },
+        methods: {
+            async getVoucher() {
+                let data = await circulateManage_getVoucher(this.$route.query.id);
+                this.voucherData = data.data.data;
+            }
+        },
+        mounted() {
+            this.getVoucher();
         }
     }
 </script>

@@ -62,16 +62,16 @@
         <div class="content">
             <div class="title">
                 <h1 class="clear">
-                    <span class="fl">医疗癌症数据</span>
-                    <strong class="fl">xxxx数据公司</strong>
+                    <span class="fl">{{contractData.dataName}}</span>
+                    <strong class="fl">{{contractData.partA}}</strong>
                 </h1>
             </div>
             <div class="dataMsg">
-                <p>摘要：<span>中新网3月28日电 据外媒报道，就社交媒体“脸书”(Facebook)公司外泄用户个人资料一事，欧盟已要求在两周内回答5个关键问题。而英国国会议员27日再次要求脸书CEO扎克伯格，希望他亲自回答脸书用户个资外泄相关问题，而不是让高管代替。</span></p>
-                <p>使用时间：<span>2018.09.09  至  2018.10.10</span></p>
-                <p>合约号：<span>3455666777878</span><strong>还剩2小时20分钟&nbsp;自动销毁文件</strong></p>
-                <p>安全数据流通服务登录地址：<span>192.168.0.48</span></p>
-                <h1><el-button size="small" type="primary" @click="toContract">查看合约</el-button><el-button size="small" type="primary" @click="toVoucher">查看凭证</el-button></h1>
+                <p>摘要：<span>{{contractData.dataSummary}}</span></p>
+                <p>使用时间：<span>{{contractData.start + '  至  ' + contractData.end}}</span></p>
+                <p>合约号：<span>{{contractData.contractRecordId}}</span><strong>还剩2小时20分钟&nbsp;自动销毁文件</strong></p>
+                 <p>安全数据流通服务登录地址：<span>{{contractData.hostname}}</span></p>
+                <h1><el-button size="small" type="primary" @click="toContract(contractData.contractRecordId)">查看合约</el-button><el-button size="small" type="primary" @click="toVoucher(contractData.guacamoleId)">查看凭证</el-button></h1>
             </div>
             <div class="title"><h1>交易生命周期</h1></div>
             <div class="cycle">
@@ -154,15 +154,30 @@
 </template>
 
 <script>
+    import { circulateManage_getContract } from '~/api/getData'
+
     export default {
         name: "circulate-manage-detail",
-        methods: {
-            toVoucher() {
-                this.$router.push({path : '/platform/circulateManageVoucher', query: { id : this.$route.query.id }});
-            },
-            toContract() {
-                this.$router.push({path : '/platform/circulateManageContract', query: { id : this.$route.query.id }});
+        data() {
+            return{
+                contractData: {}
             }
+        },
+        methods: {
+            toVoucher(id) {
+                this.$router.push({path : '/platform/circulateManageVoucher', query: { uuid : this.$route.query.id ,id : id }});
+            },
+            toContract(id) {
+                this.$router.push({path : '/platform/circulateManageContract', query: { id : id }});
+            },
+            async getContract() {
+                let data = await circulateManage_getContract(this.$route.query.id);
+                console.log(data);
+                this.contractData = data.data.data;
+            }
+        },
+        mounted() {
+            this.getContract();
         }
     }
 </script>

@@ -16,6 +16,10 @@ export const DFC_start = (id) => axios.put(api+'/vm/start?id='+id);
 export const DFC_stop = (id) => axios.put(api+'/vm/shutdown?id='+id);
 export const DFC_destroy = (id) => axios.delete(api+'/vm/destroy?id='+id);
 export const DFC_getMonitorById = (id) => axios.get(api+'/vm/monitor?id='+id);
+// 流通管理
+export const circulateManage_getTableData = (page,size) => axios.get(api+'/contract/getContract?page='+page+'&size='+size);
+export const circulateManage_getContract = (id) => axios.get(api+'/contract/contractDetail?contractRecordId='+id);
+export const circulateManage_getVoucher = (id) => axios.get(api+'/guacamole/records?id='+id);
 // 用户管理
 export const user_getTableData = (page,size) => axios.post(api+'/account/queryByLimit',{
     limit: {
