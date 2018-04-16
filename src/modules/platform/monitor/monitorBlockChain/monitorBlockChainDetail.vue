@@ -1,5 +1,12 @@
 <template>
     <div>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：平台监控&nbsp;<i class="el-icon-arrow-right"></i>&nbsp;</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item to="/platform/monitor/blockChain">区块链网络服务监控</el-breadcrumb-item>
+                <el-breadcrumb-item>详情</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <ul class="monitorTitle clear">
             <li class="fl">xxx虚拟机</li>
             <li class="fr">状态：<span>up</span></li>
@@ -19,11 +26,11 @@
                     </el-row>
                 </el-col>
                 <el-col :span="7">
-                    <h1>内存使用</h1>
+                    <h1>内存使用(MB)</h1>
                     <div class="chartBox" ref="chartPie"></div>
                 </el-col>
                 <el-col :span="24">
-                    <h1>IO&nbsp;Await</h1>
+                    <h1>网络接收数据(MB)</h1>
                     <div class="chartBox" ref="chartLine"></div>
                 </el-col>
             </el-row>
@@ -32,13 +39,26 @@
 </template>
 
 <script>
+    import { blockChain_getToken } from '~/api/getData'
+    import { blockChain_wsUrl } from '~/api/getData'
+
     export default {
         name: "monitor-block-chain-detail",
         data() {
-            return{}
+            return{
+                webSocket: null,
+                barData: {
+                    x: ['','','','','','',''],
+                    y: [0,0,0,0,0,0,0]
+                },
+                lineData: {
+                    x: ['','','','','','',''],
+                    y: [0,0,0,0,0,0,0]
+                }
+            }
         },
         methods: {
-            gauge() {
+            gauge(value) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartGauge);
                 // 图标配置项
@@ -79,22 +99,25 @@
                                     color: 'auto'
                                 }
                             },
-                            detail: {formatter:'{value}%'},
-                            data: [{value: 76}]
+                            detail: {
+                                fontSize: 18,
+                                formatter:'{value}%'
+                            },
+                            data: [{value: value}]
                         }
                     ]
                 };
                 // 绘制图表
                 myChart.setOption(option);
             },
-            barVertical() {
+            barVertical(x,y) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartBarVertical);
                 // 图标配置项
                 let option = {
                     color: ['#5a8bff'],
                     title: {
-                        text: '数据流通统计',
+                        text: 'CPU使用率时段统计(GB)',
                         textStyle: {
                             color: '#606266',
                             fontSize: 16,
@@ -117,7 +140,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            data : x,
                             axisTick: {
                                 alignWithLabel: true
                             }
@@ -141,14 +164,14 @@
                                     {type : 'max', name: '最大值'}
                                 ]
                             },
-                            data:[10, 52, 200, 334, 390, 330, 220]
+                            data: y
                         }
                     ]
                 };
                 // 绘制图表
                 myChart.setOption(option);
             },
-            pie() {
+            pie(read,write) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartPie);
                 // 图标配置项
@@ -160,7 +183,7 @@
                     legend: {
                         orient: 'vertical',
                         x: 30,
-                        data:['已使用内存','未使用内存']
+                        data:['已读取内存','已写入内存']
                     },
                     color: ['#ffc74a','#5a8bff'],
                     series: [
@@ -177,8 +200,8 @@
 
                             },
                             data:[
-                                {value:335, name:'已使用内存'},
-                                {value:310, name:'未使用内存'}
+                                {value:read, name:'已读取内存'},
+                                {value:write, name:'已写入内存'}
                             ]
                         }
                     ]
@@ -186,7 +209,7 @@
                 // 绘制图表
                 myChart.setOption(option);
             },
-            line() {
+            line(x,y) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartLine);
                 // 图标配置项
@@ -201,14 +224,14 @@
                     xAxis: {
                         type: 'category',
                         boundaryGap: false,
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        data: x
                     },
                     yAxis: {
                         type: 'value'
                     },
                     series: [
                         {
-                            data: [40, 50, 70, 30, 40, 80, 70],
+                            data: y,
                             type: 'line',
                             smooth: true,
                             areaStyle: {
@@ -221,13 +244,48 @@
                 };
                 // 绘制图表
                 myChart.setOption(option);
+            },
+            async initWebSocket() {
+                let data = await blockChain_getToken();
+                this.webSocket = new WebSocket(blockChain_wsUrl(data.data));
+                this.webSocket.onmessage = this.webSocket_onmessage;
+                this.webSocket.onclose = this.webSocket_close;
+            },
+            webSocket_onmessage(e){
+                let data = JSON.parse(e.data)[0];
+                // CPU使用率
+                let gaugeData = (data.cpu.usage.user/data.cpu.usage.total).toFixed(2);
+                this.gauge(gaugeData);
+                // CPU使用率时段统计
+                this.barData.x.shift();
+                this.barData.y.shift();
+                this.barData.x.push('');
+                this.barData.y.push(parseInt(data.cpu.usage.user/1024/1024/1024/1024));
+                this.barVertical(this.barData.x,this.barData.y);
+                // 内存使用
+                let read, write;
+                read = data.diskio.io_service_bytes[0].stats.Read/1024/1024/1024;
+                write = data.diskio.io_service_bytes[0].stats.Write/1024/1024/1024;
+                this.pie(read,write);
+                // 网络统计
+                this.lineData.x.shift();
+                this.lineData.y.shift();
+                this.lineData.x.push('');
+                this.lineData.y.push(data.network.rx_bytes/1024/1024/1024);
+                this.line(this.lineData.x,this.lineData.y);
+            },
+            webSocket_close(e){  //关闭
+                console.log("connection closed (" + e.code + ")");
             }
         },
-        mounted(){
-            this.gauge();
-            this.barVertical();
-            this.pie();
-            this.line();
+        mounted() {
+            this.initWebSocket();
+        },
+        beforeRouteLeave (to, from, next) {
+            // 导航离开该组件的对应路由时调用
+            // 可以访问组件实例 `this`
+            this.webSocket && this.webSocket.close();
+            next();
         }
     }
 </script>

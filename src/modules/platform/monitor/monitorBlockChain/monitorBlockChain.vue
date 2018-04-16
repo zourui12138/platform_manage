@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：平台监控&nbsp;<i class="el-icon-arrow-right"></i>&nbsp;</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>区块链网络服务监控</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <div class="count">
             <el-row :gutter="40">
                 <el-col :span="12">
@@ -58,7 +64,7 @@
         },
         methods: {
             toDetail() {
-                this.$router.push({path : '/platform/monitor/blockChainDetail', query: { uuid : '12138' }});
+                this.$router.push({path : '/platform/monitor/blockChainDetail'});
             },
             async getTableData() {
                 let data;

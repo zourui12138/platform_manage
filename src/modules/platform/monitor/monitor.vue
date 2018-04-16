@@ -1,17 +1,15 @@
 <template>
     <div>
-        <div class="breadcrumbContainer clear">
-            <span class="fl">所在位置：</span>
-            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item>平台监控</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
-        <nav class="monitorMenu">
-            <ul class="clear">
-                <li class="fl" :class="{current : blockChainMenu}" @click="toggleMonitorMenu('blockChain')">区块链网络服务监控</li>
-                <li class="fl" :class="{current : environmentMenu}" @click="toggleMonitorMenu('environment')">数据流通环境监控</li>
-            </ul>
-        </nav>
+        <el-menu
+            style="margin-top: 20px"
+            :default-active="defaultActive"
+            mode="horizontal"
+            router
+            active-text-color="#5a8bff"
+            background-color="#fff">
+            <el-menu-item index="blockChain">区块链网络服务监控</el-menu-item>
+            <el-menu-item index="environment">数据流通环境监控</el-menu-item>
+        </el-menu>
         <router-view/>
     </div>
 </template>
@@ -19,51 +17,19 @@
 <script>
     export default {
         name: "monitor",
-        data() {
-            return{
-                blockChainMenu: false,
-                environmentMenu: false
-            }
-        },
-        methods: {
-            toggleMonitorMenu(arg) {
-                this.$router.push({path: '/platform/monitor/'+arg});
-                this.initMonitorMenu();
-            },
-            initMonitorMenu() {
-                this.blockChainMenu = false;
-                this.environmentMenu = false;
-                console.log(this.$route.name);
+        computed: {
+            defaultActive() {
+                let data;
                 switch (this.$route.name){
-                    case 'monitorEnvironment' : this.environmentMenu = true;break;
-                    case 'monitorEnvironmentDetail' : this.environmentMenu = true;break;
-                    case 'monitorBlockChain' : this.blockChainMenu = true;break;
-                    case 'monitorBlockChainDetail' : this.blockChainMenu = true;break;
+                    case 'monitorEnvironment' : data = 'environment';break;
+                    case 'monitorEnvironmentDetail' : data = 'environment';break;
+                    case 'monitorBlockChain' : data = 'blockChain';break;
+                    case 'monitorBlockChainDetail' : data = 'blockChain';break;
                 }
+                return data;
             }
-        },
-        mounted() {
-            this.initMonitorMenu();
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    .monitorMenu{
-        margin-bottom: 25px;
-        li{
-            width: 196px;
-            height: 36px;
-            line-height: 36px;
-            text-align: center;
-            border: 2px solid #5a8bff;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        li.current,li:hover{
-            background-color: #5a8bff;
-            color: #fff;
-            transition: all .2s;
-        }
-    }
-</style>
+<style lang="scss" scoped></style>

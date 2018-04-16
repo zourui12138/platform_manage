@@ -1,5 +1,12 @@
 <template>
     <div>
+        <div class="breadcrumbContainer clear">
+            <span class="fl">所在位置：平台监控&nbsp;<i class="el-icon-arrow-right"></i>&nbsp;</span>
+            <el-breadcrumb class="breadcrumb fl" separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item to="/platform/monitor/environment">数据流通环境监控</el-breadcrumb-item>
+                <el-breadcrumb-item>详情</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
         <ul class="monitorTitle clear">
             <li class="fl">xxx虚拟机</li>
             <li class="fr">状态：<span>up</span></li>
@@ -239,7 +246,6 @@
             },
             async getMonitorById() {
                 let data = await DFC_getMonitorById(this.$route.query.id);
-                console.log(data);
                 this.gauge(data.data.data.cpu);
                 this.pie(data.data.data.memUsed,data.data.data.memTotal-data.data.data.memUsed);
                 this.barData.x.shift();

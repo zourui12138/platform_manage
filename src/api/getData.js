@@ -19,6 +19,8 @@ export const DFC_getMonitorById = (id) => axios.get(api+'/vm/monitor?id='+id);
 // 流通管理
 export const circulateManage_getTableData = (page,size) => axios.get(api+'/contract/getContract?page='+page+'&size='+size);
 export const circulateManage_getContract = (id) => axios.get(api+'/contract/contractDetail?contractRecordId='+id);
+export const circulateManage_getCycle = (id) => axios.post(api+'/carried/getTranactionSMZQ',{id:id});
+export const circulateManage_getCycleBlock = (id) => axios.post(api+'/carried/getblockAndTran',{id:id});
 export const circulateManage_getVoucher = (id) => axios.get(api+'/guacamole/records?id='+id);
 // 用户管理
 export const user_getTableData = (page,size) => axios.post(api+'/account/queryByLimit',{
@@ -63,6 +65,8 @@ export const dataDirectory_deleteDataDirectory = (id) => axios.delete(api+'/data
 // 区块链管理
 export const blockChain_getTableData = () => axios.get(api+'/carried/getInfo');
 export const blockChain_getCountData = () => axios.get(api+'/demand/getInfo');
+export const blockChain_getToken = () => axios.get(api+'/carried/getToken');
+export const blockChain_wsUrl = (token) => 'ws://192.168.125.3:18080/v1/stats?token='+token;
 // 添加响应拦截器
 export const interceptor = (callback) => axios.interceptors.response.use(
     // 正确处理的回调函数

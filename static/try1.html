@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="playback.css">
-  <script type="text/javascript" src="guacamole-common-js/all.js"></script>
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="playback.css">
+    <script type="text/javascript" src="guacamole-common-js/all.js"></script>
+    <title>Document</title>
 </head>
 <body>
 <div id="player">
-  <!-- Player display -->
-  <div id="display">
-    <div class="notification-container">
-      <div class="seek-notification">
-        <p>
-          Seek in progress...
-          <button id="cancel-seek">Cancel</button>
-        </p>
-      </div>
+    <!-- Player display -->
+    <div id="display">
+        <div class="notification-container">
+            <div class="seek-notification">
+                <p>
+                    Seek in progress...
+                    <button id="cancel-seek">Cancel</button>
+                </p>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- Player controls -->
-  <div class="controls">
-    <button id="play-pause">Play</button>
-    <input id="position-slider" type="range">
-    <span id="position">00:00</span>
-    <span>/</span>
-    <span id="duration">00:00</span>
-  </div>
+    <!-- Player controls -->
+    <div class="controls">
+        <button id="play-pause">Play</button>
+        <input id="position-slider" type="range">
+        <span id="position">00:00</span>
+        <span>/</span>
+        <span id="duration">00:00</span>
+    </div>
 </div>
 <script type="text/javascript" src="playback.js"></script>
 <script>
-  //var name = window.parent.document.URL.split('name=')[1];
-  let recording = initExamplePlayer(sessionStorage.getItem('url'));
-  console.log(recording);
-  recording.play();
+    //var name = window.parent.document.URL.split('name=')[1];
+    let recording = initExamplePlayer(sessionStorage.getItem('url'));
+    console.log(recording);
+    recording.play();
 </script>
 </body>
 </html>

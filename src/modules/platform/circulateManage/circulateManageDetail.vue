@@ -76,62 +76,25 @@
             <div class="title"><h1>交易生命周期</h1></div>
             <div class="cycle">
                 <ul class="cycleStep clear">
-                    <li class="fl">
-                        <div>合约签订</div>
-                        <p>2018/04/08 23:59:59</p>
-                        <h1><button>详情</button></h1>
-                        <strong></strong>
-                    </li>
-                    <li class="fl">
-                        <div>合约签订</div>
-                        <p>2018/04/08 23:59:59</p>
-                        <h1><button>详情</button></h1>
-                        <strong></strong>
-                    </li>
-                    <li class="fl">
-                        <div>合约签订</div>
-                        <p>2018/04/08 23:59:59</p>
-                        <h1><button>详情</button></h1>
-                        <strong></strong>
-                    </li>
-                    <li class="fl">
-                        <div>合约签订</div>
-                        <p>2018/04/08 23:59:59</p>
-                        <h1><button>详情</button></h1>
-                        <strong></strong>
-                    </li>
-                    <li class="fl">
-                        <div>合约签订</div>
-                        <p>2018/04/08 23:59:59</p>
-                        <h1><button>详情</button></h1>
-                        <strong></strong>
-                    </li>
-                    <li class="fl">
-                        <div>合约签订</div>
-                        <p>2018/04/08 23:59:59</p>
-                        <h1><button>详情</button></h1>
-                        <strong></strong>
-                    </li>
-                    <li class="fl">
-                        <div>合约签订</div>
-                        <p>2018/04/08 23:59:59</p>
-                        <h1><button>详情</button></h1>
+                    <li class="fl" v-for="i in cycleData" :class="{current : i.operType === cycleCurrentData.operType}">
+                        <div>{{i.operType}}</div>
+                        <p>{{i.operTime}}</p>
+                        <h1><button @click="getCurrentCycle(i)">详情</button></h1>
                         <strong></strong>
                     </li>
                 </ul>
-                <h1 class="cycleMsgTitle">合约签订：<span>2018.03.03 12:22</span></h1>
+                <h1 class="cycleMsgTitle">合约签订：<span>{{cycleCurrentData.operTime}}</span></h1>
                 <div class="cycleMsg">
                     <el-row>
                         <el-col :span="12">
                             <div class="cycleMsgLeft">
                                 <el-row>
-                                    <el-col :span="24">交易哈希值：<span>1252a5s2d1d5q1s5</span></el-col>
-                                    <el-col :span="12">业务类型：数据流通</el-col>
-                                    <el-col :span="12">交易类型：合约签订</el-col>
-                                    <el-col :span="12">交易发起：XXXXX</el-col>
-                                    <el-col :span="12">交易接受：XXXXXXX</el-col>
-                                    <el-col :span="12">合约编码：24555tg</el-col>
-                                    <el-col :span="12">交易时间：2018.03.03 12:22</el-col>
+                                    <el-col :span="24">交易哈希值：<span>{{cycleCurrentData.txId}}</span></el-col>
+                                    <el-col :span="12">合约编码：{{cycleCurrentData.contractId}}</el-col>
+                                    <el-col :span="12">业务类型：{{cycleCurrentData.busiType}}</el-col>
+                                    <el-col :span="12">操作类型：{{cycleCurrentData.operType}}</el-col>
+                                    <el-col :span="12">操作时间：{{cycleCurrentData.operTime}}</el-col>
+                                    <el-col :span="12">操作人：{{cycleCurrentData.operUser}}</el-col>
                                 </el-row>
                             </div>
                         </el-col>
@@ -139,10 +102,10 @@
                             <div class="cycleMsgRight">
                                 <el-row>
                                     <el-col :span="24">所在区块信息</el-col>
-                                    <el-col :span="24">哈希值：5a6s5s586wf2s5e56a5656daf5656321245451562</el-col>
-                                    <el-col :span="12">区块高度：3456</el-col>
+                                    <el-col :span="24">哈希值：{{cycleCurrentBlockData.hash}}</el-col>
+                                    <el-col :span="12">区块高度：{{cycleCurrentBlockData.blockNumber}}</el-col>
                                     <el-col :span="12">交易笔数：1</el-col>
-                                    <el-col :span="12">创建时间：2018.03.03 21:33</el-col>
+                                    <el-col :span="12">创建时间：{{cycleCurrentBlockData.createTime}}</el-col>
                                 </el-row>
                             </div>
                         </el-col>
@@ -155,12 +118,17 @@
 
 <script>
     import { circulateManage_getContract } from '~/api/getData'
+    import { circulateManage_getCycle } from '~/api/getData'
+    import { circulateManage_getCycleBlock } from '~/api/getData'
 
     export default {
         name: "circulate-manage-detail",
         data() {
             return{
-                contractData: {}
+                contractData: {},
+                cycleData: null,
+                cycleCurrentData: {},
+                cycleCurrentBlockData: {}
             }
         },
         methods: {
@@ -172,12 +140,25 @@
             },
             async getContract() {
                 let data = await circulateManage_getContract(this.$route.query.id);
-                console.log(data);
                 this.contractData = data.data.data;
+            },
+            async getCycle() {
+                let data = await circulateManage_getCycle(this.$route.query.id);
+                this.cycleData = data.data.data;
+                this.getCurrentCycle(data.data.data[0]);
+            },
+            async getCycleBlock(hash) {
+                let data = await circulateManage_getCycleBlock(hash);
+                this.cycleCurrentBlockData = data.data.data;
+            },
+            getCurrentCycle(data) {
+                this.cycleCurrentData = data;
+                this.getCycleBlock(data.txId);
             }
         },
         mounted() {
             this.getContract();
+            this.getCycle();
         }
     }
 </script>
@@ -300,6 +281,16 @@
                 li:last-child{
                     strong{
                         display: none;
+                    }
+                }
+                li.current{
+                    div{
+                        border: 2px solid #5a8bff;
+                    }
+                    h1{
+                        button{
+                            background-color: #5a8bff;
+                        }
                     }
                 }
             }
