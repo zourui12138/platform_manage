@@ -55,12 +55,12 @@
             </el-row>
         </div>
         <div class="content">
-            <div class="search">
-                <el-select placeholder="请选择" v-model="selected">
-                    <el-option label="全部" value="全部"></el-option>
-                </el-select>
-                <el-input placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
-            </div>
+            <!--<div class="search">-->
+                <!--<el-select placeholder="请选择" v-model="selected">-->
+                    <!--<el-option label="全部" value="全部"></el-option>-->
+                <!--</el-select>-->
+                <!--<el-input placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>-->
+            <!--</div>-->
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
                 <el-table-column prop="vmName" label="名称"></el-table-column>
                 <el-table-column prop="hostName" label="主机"></el-table-column>
@@ -145,5 +145,8 @@
         img{
             margin:33px 34px 33px 0;
         }
+    }
+    .content{
+        padding-top: 30px;
     }
 </style>

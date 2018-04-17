@@ -8,13 +8,14 @@
         </div>
         <div class="content">
             <div class="search">
-                <el-select size="medium" placeholder="请选择" v-model="selected">
-                    <el-option label="虚拟机总数" value="虚拟机总数"></el-option>
-                    <el-option label="已启用虚拟机" value="已启用虚拟机"></el-option>
-                    <el-option label="已停用虚拟机" value="已停用虚拟机"></el-option>
-                    <el-option label="已销毁虚拟机" value="已销毁虚拟机"></el-option>
-                </el-select>
-                <el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
+                <el-input
+                    size="medium"
+                    v-model="searchKey"
+                    clearable
+                    placeholder="请输入名称,主机名,集群"
+                    @blur="getTableData(1)"
+                    suffix-icon="el-icon-search">
+                </el-input>
             </div>
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
                 <el-table-column prop="contractRecordId" label="合约号"></el-table-column>
@@ -53,7 +54,8 @@
                 pageSize: 10,
                 tableData: null,
                 totalElements: null,
-                selected: '虚拟机总数'
+                selected: '虚拟机总数',
+                searchKey: ''
             }
         },
         methods: {
@@ -62,7 +64,7 @@
             },
             async getTableData(page) {
                 let data;
-                data = await circulateManage_getTableData(page,this.pageSize);
+                data = await circulateManage_getTableData(page,this.pageSize,this.searchKey);
                 this.tableData = data.data.data;
                 this.totalElements = data.data.total;
             }

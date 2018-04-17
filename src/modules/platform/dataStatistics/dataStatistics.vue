@@ -7,21 +7,21 @@
             </el-breadcrumb>
         </div>
         <div class="content">
-            <div class="search">
-                <el-select size="medium" placeholder="请选择" v-model="selected">
-                    <el-option label="虚拟机总数" value="虚拟机总数"></el-option>
-                    <el-option label="已启用虚拟机" value="已启用虚拟机"></el-option>
-                    <el-option label="已停用虚拟机" value="已停用虚拟机"></el-option>
-                    <el-option label="已销毁虚拟机" value="已销毁虚拟机"></el-option>
-                </el-select>
-                <el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
-            </div>
+            <!--<div class="search">-->
+                <!--<el-select size="medium" placeholder="请选择" v-model="selected">-->
+                    <!--<el-option label="虚拟机总数" value="虚拟机总数"></el-option>-->
+                    <!--<el-option label="已启用虚拟机" value="已启用虚拟机"></el-option>-->
+                    <!--<el-option label="已停用虚拟机" value="已停用虚拟机"></el-option>-->
+                    <!--<el-option label="已销毁虚拟机" value="已销毁虚拟机"></el-option>-->
+                <!--</el-select>-->
+                <!--<el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>-->
+            <!--</div>-->
             <el-row class="tradeCount">
                 <el-col :span="4">
                     <div class="tradeCountBox clear">
                         <img class="fl" src="../../../assets/img/platform/dataStatistics/tradeCount.png" style="margin-top: 15px" alt="">
                         <div class="fl">
-                            <h1>23</h1>
+                            <h1>{{tradeCount.all}}</h1>
                             <p>交易总量</p>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="tradeCountBox">
                         <img class="fl" src="../../../assets/img/platform/dataStatistics/tradeSuccess.png" style="margin-top: 15px" alt="">
                         <div class="fl">
-                            <h1>23</h1>
+                            <h1>{{tradeCount.success}}</h1>
                             <p>交易成功</p>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="tradeCountBox">
                         <img class="fl" src="../../../assets/img/platform/dataStatistics/tradeIntegral.png" style="margin-top: 13px" alt="">
                         <div class="fl">
-                            <h1>23</h1>
+                            <h1>{{tradeCount.points}}</h1>
                             <p>交易积分</p>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="tradeCountBox">
                         <img class="fl" src="../../../assets/img/platform/dataStatistics/userTotal.png" style="margin-top: 14px" alt="">
                         <div class="fl">
-                            <h1>23</h1>
+                            <h1>{{userCount.totalUsers}}</h1>
                             <p>总用户数</p>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="tradeCountBox" style="border-right: none;">
                         <img class="fl" src="../../../assets/img/platform/dataStatistics/userAdd.png" style="margin-top: 14px" alt="">
                         <div class="fl">
-                            <h1>23</h1>
+                            <h1>{{userCount.newUsersTotal}}</h1>
                             <p>新增用户</p>
                         </div>
                     </div>
@@ -82,113 +82,49 @@
                     <div class="chartBox chartBorder" ref="chartPieContent"></div>
                 </el-col>
             </el-row>
-            <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
-                <el-table-column prop="name" label="名称"></el-table-column>
-                <el-table-column prop="host" label="主机"></el-table-column>
-                <el-table-column prop="ip" label="ip地址"></el-table-column>
-                <el-table-column prop="cluster" label="群集"></el-table-column>
-                <el-table-column prop="dataCenter" label="数据中心"></el-table-column>
-                <el-table-column prop="memory" label="内存"></el-table-column>
-                <el-table-column prop="cpu" label="CPU"></el-table-column>
-                <el-table-column prop="network" label="网络"></el-table-column>
-                <el-table-column prop="date" label="使用时间"></el-table-column>
-                <el-table-column prop="user" label="使用方"></el-table-column>
-                <el-table-column label="状态">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.status }}</span>
-                        <el-switch v-model="scope.row.status === '使用中'"></el-switch>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="scope">
-                        <el-button type="text" size="mini">详情</el-button>
-                    </template>
-                </el-table-column>
+            <el-table :data="circulateData" style="width: 100%" header-cell-class-name="tableHeaderRow">
+                <el-table-column prop="dataInfoId" label="数据ID"></el-table-column>
+                <el-table-column prop="dataName" label="数据名称"></el-table-column>
+                <el-table-column prop="companyName" label="所属公司"></el-table-column>
+                <el-table-column prop="circulationTotal" label="数据流通数"></el-table-column>
             </el-table>
             <div class="page clear">
-                <el-pagination class="fr" background layout="prev, pager, next" :total="1000"></el-pagination>
+                <el-pagination
+                    class="fr"
+                    background
+                    layout="prev, pager, next"
+                    :total="totalElements"
+                    :page-size="pageSize"
+                    @current-change="getCirculateData">
+                </el-pagination>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { user_getUserCount } from '~/api/getData'
+    import { dataDirectoty_getDirectoryCount } from '~/api/getData'
+    import { circulateManage_getCirculateCount } from '~/api/getData'
+    import { circulateManage_getCirculateData } from '~/api/getData'
+    import { circulateManage_getCirculateTrade } from '~/api/getData'
+
     export default {
         name: "data-statistics",
         data() {
             return{
-                tableData: [
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    },
-                    {
-                        name: '王小虎',
-                        host: 'vd56',
-                        ip: '192.168.111.222',
-                        cluster: '群集',
-                        dataCenter: '数据中心',
-                        memory: '0%',
-                        cpu: '0%',
-                        network: '网络',
-                        date: '2016-05-02',
-                        user: '迅鳐成都科技',
-                        status: '使用中'
-                    }
-                ],
-                selected: '虚拟机总数'
+                selected: '虚拟机总数',
+                userCount: {},
+                tradeCount: {},
+                pageSize: 5,
+                circulateData: null,
+                totalElements: null
             }
         },
         methods: {
-            pieDirectory() {
+            pieDirectory(data) {
+                let legend = [];
+                for(let i=0; i<data.length; i++){legend.push(data[i].name);}
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartPieDirectory);
                 // 图标配置项
@@ -211,7 +147,7 @@
                         x: 480,
                         y: 'center',
                         itemGap: 30,
-                        data:['数据统计1','数据统计2','数据统计3']
+                        data:legend
                     },
                     color: ['#ffc74a','#5a8bff','#33cf98'],
                     series: [
@@ -227,18 +163,16 @@
                                 }
 
                             },
-                            data:[
-                                {value:335, name:'数据统计1'},
-                                {value:310, name:'数据统计2'},
-                                {value:310, name:'数据统计3'}
-                            ]
+                            data:data
                         }
                     ]
                 };
                 // 绘制图表
                 myChart.setOption(option);
             },
-            pieContent() {
+            pieContent(data) {
+                let legend = [];
+                for(let i=0; i<data.length; i++){legend.push(data[i].name);}
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartPieContent);
                 // 图标配置项
@@ -261,9 +195,9 @@
                         x: 480,
                         y: 'center',
                         itemGap: 30,
-                        data:['数据统计1','数据统计2','数据统计3']
+                        data:legend
                     },
-                    color: ['#ffc74a','#5a8bff','#33cf98'],
+                    color: ['#ffc74a','#5a8bff','#33cf98','#F27356','#8580FB','#FA7096'],
                     series: [
                         {
                             name:'数据统计',
@@ -277,27 +211,64 @@
                                 }
 
                             },
-                            data:[
-                                {value:335, name:'数据统计1'},
-                                {value:310, name:'数据统计2'},
-                                {value:310, name:'数据统计3'}
-                            ]
+                            data:data
                         }
                     ]
                 };
                 // 绘制图表
                 myChart.setOption(option);
+            },
+            async getUserCount() {
+                let data = await user_getUserCount();
+                this.userCount = data.data.data;
+            },
+            async getDirectoryCount() {
+                let data = await dataDirectoty_getDirectoryCount();
+                let pieData = [];
+                for(let i=0; i< data.data.data.dataDirectorysDataTotalVos.length; i++){
+                    let current = data.data.data.dataDirectorysDataTotalVos[i];
+                    pieData.push({
+                        name : current.dataDirectoryName,
+                        value : current.dataDirectoryTotal
+                    });
+                }
+                this.pieDirectory(pieData);
+            },
+            async getCirculateCount() {
+                let data = await circulateManage_getCirculateCount();
+                let pieData = [];
+                for(let i=0; i< data.data.data.circulationDataVos.length; i++){
+                    let current = data.data.data.circulationDataVos[i];
+                    pieData.push({
+                        name : current.dataName,
+                        value : current.circulationTotal
+                    });
+                }
+                this.pieContent(pieData);
+            },
+            async getCirculateData(page) {
+                let data = await circulateManage_getCirculateData(page,this.pageSize);
+                this.circulateData = data.data.data;
+                this.totalElements = data.data.total;
+            },
+            async getCirculateTrade() {
+                let data = await circulateManage_getCirculateTrade();
+                this.tradeCount = data.data.data;
             }
         },
         mounted() {
-            this.pieDirectory();
-            this.pieContent();
+            this.getDirectoryCount();
+            this.getCirculateCount();
+            this.getUserCount();
+            this.getCirculateData(1);
+            this.getCirculateTrade();
         }
     }
 </script>
 
 <style lang="scss" scoped>
     .content{
+        padding-top: 30px;
         .tradeCount{
             padding-top: 20px;
             border-top: 2px solid #f3f7ff;

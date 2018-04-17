@@ -56,13 +56,19 @@
         </div>
         <div class="content">
             <div class="search">
-                <el-select size="medium" placeholder="请选择" v-model="selected">
-                    <el-option label="虚拟机总数" value="虚拟机总数"></el-option>
-                    <el-option label="已启用虚拟机" value="已启用虚拟机"></el-option>
-                    <el-option label="已停用虚拟机" value="已停用虚拟机"></el-option>
-                    <el-option label="已销毁虚拟机" value="已销毁虚拟机"></el-option>
+                <el-select size="medium" placeholder="请选择" v-model="selected" @change="changeSelect">
+                    <el-option label="DFC总数" value=""></el-option>
+                    <el-option label="已启用DFC" value="1"></el-option>
+                    <el-option label="已停用DFC" value="0"></el-option>
                 </el-select>
-                <el-input size="medium" placeholder="请输入内容" suffix-icon="el-icon-search"></el-input>
+                <el-input
+                    size="medium"
+                    v-model="searchKey"
+                    clearable
+                    placeholder="请输入名称,主机名,集群"
+                    @blur="getTableData(1)"
+                    suffix-icon="el-icon-search">
+                </el-input>
             </div>
             <el-table :data="tableData" style="width: 100%" header-cell-class-name="tableHeaderRow">
                 <el-table-column prop="vmName" label="名称"></el-table-column>
@@ -116,7 +122,8 @@
                     stopDFC: null,
                     destroyDFC: null
                 },
-                selected: '虚拟机总数'
+                selected: '',
+                searchKey: ''
             }
         },
         methods: {
@@ -125,7 +132,7 @@
             },
             async getTableData(page) {
                 let data;
-                data = await DFC_getTableData(page,this.pageSize);
+                data = await DFC_getTableData(page,this.pageSize,this.searchKey,this.selected);
                 this.tableData = data.data.data.content;
                 this.totalElements = data.data.data.totalElements;
             },
@@ -134,6 +141,10 @@
                 data = await DFC_getCountData();
                 this.countData = data.data.data;
             },
+            changeSelect(val) {
+                this.selected = val;
+                this.getTableData(1);
+            }
         },
         mounted() {
             this.getTableData(1);

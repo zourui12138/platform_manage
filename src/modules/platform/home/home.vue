@@ -10,22 +10,10 @@
             <el-row :gutter="40">
                 <el-col :span="6">
                     <div class="countBox clear">
-                        <img class="fl" src="../../../assets/img/platform/home/node.png" alt="">
-                        <div class="fl">
-                            <h1 class="clear">
-                                <strong class="fl">344</strong>
-                                <span class="fr">(+145)</span>
-                            </h1>
-                            <p>当前节点数node</p>
-                        </div>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="countBox clear">
                         <img class="fl" src="../../../assets/img/platform/home/blockHeight.png" alt="">
                         <div class="fl">
                             <h1 class="clear">
-                                <strong class="fl">67,345</strong>
+                                <strong class="fl">{{blockChainCount.high}}</strong>
                             </h1>
                             <p>区块高度block height</p>
                         </div>
@@ -33,24 +21,34 @@
                 </el-col>
                 <el-col :span="6">
                     <div class="countBox clear">
-                        <img class="fl" src="../../../assets/img/platform/home/warn.png" alt="">
+                        <img class="fl" src="../../../assets/img/platform/home/totalTrade.png" alt="">
                         <div class="fl">
                             <h1 class="clear">
-                                <strong class="fl">344</strong>
-                                <span class="fr">(+145)</span>
+                                <strong class="fl">{{blockChainCount.jycount}}</strong>
                             </h1>
-                            <p>最新警告信息</p>
+                            <p>交易总数</p>
                         </div>
                     </div>
                 </el-col>
                 <el-col :span="6">
                     <div class="countBox clear">
-                        <img class="fl" src="../../../assets/img/platform/home/_warn.png" alt="">
+                        <img class="fl" src="../../../assets/img/platform/home/totalContract.png" alt="">
                         <div class="fl">
                             <h1 class="clear">
-                                <strong class="fl">344</strong>
+                                <strong class="fl">{{blockChainCount.hycount}}</strong>
                             </h1>
-                            <p>已处理警告信息</p>
+                            <p>合约总数</p>
+                        </div>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="countBox clear">
+                        <img class="fl" src="../../../assets/img/platform/home/tps.png" alt="">
+                        <div class="fl">
+                            <h1 class="clear">
+                                <strong class="fl">{{blockChainCount.tps+'/s'}}</strong>
+                            </h1>
+                            <p>历史最高TPS</p>
                         </div>
                     </div>
                 </el-col>
@@ -135,6 +133,8 @@
     import { DFC_getTableData } from "~/api/getData"
     import { DFC_getCountData } from "~/api/getData"
     import { blockChain_getCountData } from "~/api/getData"
+    import { circulateManage_getCirculateBar } from "~/api/getData"
+    import { circulateManage_getCirculateTop } from "~/api/getData"
 
     export default {
         name: "home",
@@ -148,6 +148,12 @@
                     startDFC: null,
                     stopDFC: null,
                     destroyDFC: null
+                },
+                blockChainCount: {
+                    high: null,
+                    hycount: null,
+                    jycount: null,
+                    tps: null,
                 }
             }
         },
@@ -201,7 +207,7 @@
                 // 绘制图表
                 myChart.setOption(option);
             },
-            barVertical() {
+            barVertical(x,y) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartBarVertical);
                 // 图标配置项
@@ -231,7 +237,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            data : x,
                             axisTick: {
                                 alignWithLabel: true
                             }
@@ -255,14 +261,14 @@
                                     {type : 'max', name: '最大值'}
                                 ]
                             },
-                            data:[10, 52, 200, 334, 390, 330, 220]
+                            data:y
                         }
                     ]
                 };
                 // 绘制图表
                 myChart.setOption(option);
             },
-            barHorizontal() {
+            barHorizontal(x,y) {
                 // 基于准备好的dom，初始化echarts实例
                 let myChart = this.$echarts.init(this.$refs.chartBarHorizontal);
                 // 图标配置项
@@ -301,7 +307,7 @@
                         axisTick: {
                             show: false
                         },
-                        data: ['人文数据','人文数据','人文数据','人文数据','人文数据','人文数据']
+                        data: y
                     },
                     series: [
                         {
@@ -323,7 +329,7 @@
                                     }
                                 }
                             },
-                            data: [39, 68, 89, 145, 160, 199]
+                            data: x
                         }
                     ]
                 };
@@ -332,7 +338,7 @@
             },
             async getTableData(page) {
                 let data;
-                data = await DFC_getTableData(page,this.pageSize);
+                data = await DFC_getTableData(page,this.pageSize,'','');
                 this.tableData = data.data.data.content;
                 this.totalElements = data.data.data.totalElements;
             },
@@ -342,18 +348,37 @@
                 this.countData = data.data.data;
             },
             async getBlockChainCountData() {
-                let data;
-                data = await blockChain_getCountData();
-                console.log(data);
+                let data = await blockChain_getCountData();
+                this.blockChainCount = data.data.data;
+            },
+            async getCirculateBar() {
+                let data = await circulateManage_getCirculateBar();
+                let barDataX = [],barDataY = [];
+                for(let i=0; i<data.data.data.length; i++){
+                    let current = data.data.data[i];
+                    barDataX.push(current.date.split(' ')[0]);
+                    barDataY.push(current.count);
+                }
+                this.barVertical(barDataX.reverse(),barDataY.reverse());
+            },
+            async getCirculateTop() {
+                let data = await circulateManage_getCirculateTop();
+                let barDataX = [],barDataY = [];
+                for(let i=0; i<data.data.data.length; i++){
+                    let current = data.data.data[i];
+                    barDataX.push(current.b);
+                    barDataY.push(current.dataName);
+                }
+                this.barHorizontal(barDataX.reverse(),barDataY.reverse());
             }
         },
         mounted(){
             this.gauge();
-            this.barVertical();
-            this.barHorizontal();
             this.getTableData(1);
             this.getDFCCountData();
             this.getBlockChainCountData();
+            this.getCirculateBar();
+            this.getCirculateTop();
         }
     }
 </script>

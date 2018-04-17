@@ -105,7 +105,7 @@
                                     <el-col :span="24">哈希值：{{cycleCurrentBlockData.hash}}</el-col>
                                     <el-col :span="12">区块高度：{{cycleCurrentBlockData.blockNumber}}</el-col>
                                     <el-col :span="12">交易笔数：1</el-col>
-                                    <el-col :span="12">创建时间：{{cycleCurrentBlockData.createTime}}</el-col>
+                                    <el-col :span="12">创建时间：{{cycleCurrentBlockData.createTime | dataFormat}}</el-col>
                                 </el-row>
                             </div>
                         </el-col>
