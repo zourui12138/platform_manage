@@ -123,7 +123,7 @@
             },
             async getTableData(page) {
                 let data;
-                data = await DFC_getTableData(page,this.pageSize);
+                data = await DFC_getTableData(page,this.pageSize,'','');
                 this.tableData = data.data.data.content;
                 this.totalElements = data.data.data.totalElements;
             },
