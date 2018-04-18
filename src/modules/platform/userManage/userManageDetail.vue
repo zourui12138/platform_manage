@@ -68,11 +68,11 @@
             </div>
             <div class="userMsgBox clear">
                 <span class="fl">账户余额：</span>
-                <p class="fl">160</p>
+                <p class="fl">{{userDetailData.creditBalance}}</p>
             </div>
             <div class="userMsgBox clear">
-                <span class="fl">累计收入：</span>
-                <p class="fl">123,456</p>
+                <span class="fl">累计消费：</span>
+                <p class="fl">{{userDetailData.accumulatedConsumptionPoints}}</p>
             </div>
         </div>
         <el-dialog
