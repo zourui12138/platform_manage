@@ -25,6 +25,7 @@
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
+                            @click="openUserAudit(scope.row.accountId)"
                             :disabled="scope.row.openingStatusValue === '已开通'"
                             :type="scope.row.openingStatusValue === '已开通' ? 'success' : 'primary'">
                             {{ scope.row.openingStatusValue }}
@@ -65,6 +66,7 @@
     import { user_getTableData } from "~/api/getData"
     import { user_enabled } from "~/api/getData"
     import { user_getCategory } from "~/api/getData"
+    import { user_userAudit } from "~/api/getData"
 
     export default {
         name: "user-manage",
@@ -103,6 +105,21 @@
                 data = await user_getCategory();
                 this.userCategory = data.data.data;
                 this.userCategory.unshift({code : '0',value : '全部分类'});
+            },
+            async userAudit(id) {
+                let data = await user_userAudit(id);
+                this.$message.success('审批已经通过');
+            },
+            openUserAudit(id) {
+                this.$confirm('此操作将开启该用户权限, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.userAudit(id);
+                }).catch(() => {
+                    this.$message({type: 'info', message: '已取消审批'});
+                });
             }
         },
         mounted() {

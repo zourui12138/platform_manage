@@ -21,7 +21,7 @@ export const circulateManage_getTableData = (page,size,searchKey) => axios.get(a
 export const circulateManage_getContract = (id) => axios.get(api+'/contract/contractDetail?contractRecordId='+id);
 export const circulateManage_getCycle = (id) => axios.post(api+'/carried/getTranactionSMZQ',{id:id});
 export const circulateManage_getCycleBlock = (id) => axios.post(api+'/carried/getblockAndTran',{id:id});
-export const circulateManage_getVoucher = (id) => axios.get(api+'/guacamole/records?id='+id);
+export const circulateManage_getVoucher = (id) => axios.get(api+'/guacamole/records?guacamoleId='+id);
 export const circulateManage_getCirculateCount = () => axios.post(api+'/dataInfo/getCirculationTotal',{limit: {size:5,startNumber:0}});
 export const circulateManage_getCirculateBar = () => axios.get(api+'/contract/statisticsSevenDay');
 export const circulateManage_getCirculateTop = () => axios.get(api+'/contract/contractRank');
@@ -56,6 +56,7 @@ export const user_getBillData = (id,page,size) => axios.post(api+'/account/bill'
     }
 });
 export const user_getUserCount = () => axios.get(api+'/account/statisticalUsers');
+export const user_userAudit = (id) => axios.put(api+'/account/audit?accountId='+id);
 // 数据目录
 export const dataDirectory_getTableData = () => axios.get(api+'/dataDirectory/queryAll');
 export const dataDirectory_addDataDirectory = (name,parentId) => axios.post(api+'/dataDirectory/add',{
