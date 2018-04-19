@@ -77,7 +77,8 @@
                 tableData: null,
                 selected: '0',
                 userStatus: null,
-                userCategory: null
+                userCategory: null,
+                currentPage: null
             }
         },
         methods: {
@@ -87,6 +88,7 @@
             async getTableData(page) {
                 let data;
                 data = await user_getTableData(page,this.pageSize);
+                this.currentPage = page;
                 this.tableData = data.data.data;
                 this.totalElements = data.data.total;
                 this.userStatus = [];
@@ -109,6 +111,7 @@
             async userAudit(id) {
                 let data = await user_userAudit(id);
                 this.$message.success('审批已经通过');
+                this.getTableData(this.currentPage);
             },
             openUserAudit(id) {
                 this.$confirm('此操作将开启该用户权限, 是否继续?', '提示', {
