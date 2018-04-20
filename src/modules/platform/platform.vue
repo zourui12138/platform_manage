@@ -21,7 +21,7 @@
                     <li class="fl"><img src="../../assets/img/platform/portrait.png" alt=""></li>
                     <li class="fl"><img src="../../assets/img/platform/message.png" alt=""></li>
                     <li class="fl"><img src="../../assets/img/platform/system.png" alt=""></li>
-                    <li class="fl"><img src="../../assets/img/platform/logout.png" alt=""></li>
+                    <li class="fl" @click="logout"><img src="../../assets/img/platform/logout.png" alt=""></li>
                 </ul>
             </header>
             <VuePerfectScrollbar class="main" v-scroll><router-view/></VuePerfectScrollbar>
@@ -77,6 +77,9 @@
             href(arg) {
                 this.$router.push({path : '/platform/'+arg});
                 this.initAsideNav();
+            },
+            logout() {
+                this.$router.push({path : '/login'});
             }
         },
         beforeMount() {
