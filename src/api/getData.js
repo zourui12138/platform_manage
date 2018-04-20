@@ -10,7 +10,7 @@ export const api_login = (username,password) => axios.post('./account/manageLogi
 // 虚拟机管理
 export const DFC_getTableData = (page,size,searchKey,status) => axios.get('./vm/list?page='+page+'&size='+size+'&searchKey='+searchKey+'&status='+status);
 export const DFC_getCountData = () => axios.get('./vm/number');
-export const DFC_getDetailData = (id) => axios.get('/vm/detail?id='+id);
+export const DFC_getDetailData = (id) => axios.get('./vm/detail?id='+id);
 export const DFC_start = (id) => axios.put('./vm/start?id='+id);
 export const DFC_stop = (id) => axios.put('./vm/shutdown?id='+id);
 export const DFC_destroy = (id) => axios.delete('./vm/destroy?id='+id);
@@ -73,8 +73,7 @@ export const dataDirectoty_getDirectoryCount = () => axios.post('./dataDirectory
 export const blockChain_getTableData = () => axios.get('./carried/getInfo');
 export const blockChain_getCountData = () => axios.get('./demand/getInfo');
 export const blockChain_getToken = () => axios.get('./carried/getToken');
-export const blockChain_wsUrl = (token) => 'ws://'+ window.location.host + window.location.pathname +'/v1/stats?token='+token;
-
+export const blockChain_wsUrl = (token) => 'ws://117.48.215.100:18099/v1/stats?token='+token;
 // 添加响应拦截器
 export const interceptor = (callback) => axios.interceptors.response.use(
     // 正确处理的回调函数
