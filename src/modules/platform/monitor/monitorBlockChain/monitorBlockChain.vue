@@ -44,9 +44,6 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <div class="page clear">
-                <el-pagination class="fr" background layout="prev, pager, next" :total="1000"></el-pagination>
-            </div>
         </div>
     </div>
 </template>
