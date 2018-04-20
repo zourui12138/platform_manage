@@ -9,54 +9,49 @@
         </div>
         <div class="step clear">
             <div class="fl">
-                <div class="short fl"></div>
-                <div class="long fl"></div>
+                <div class="short success fl"></div>
+                <div class="long success fl"></div>
             </div>
             <ul class="fl">
-                <li class="fl">
+                <li :class="[contractData.lifeState > 0 && 'success', contractData.lifeState === 0 && 'current']" class="fl">
                     <div class="rect"></div>
                     <div class="circle"></div>
                     <p>合约签订</p>
                 </li>
-                <li class="fl">
-                    <div class="rect"></div>
-                    <div class="circle"></div>
-                    <p>支付积分</p>
-                </li>
-                <li class="fl">
+                <li :class="[contractData.lifeState > 1 && 'success', contractData.lifeState === 1 && 'current']" class="fl">
                     <div class="rect"></div>
                     <div class="circle"></div>
                     <p>环境配置</p>
                 </li>
-                <li class="fl">
+                <li :class="[contractData.lifeState > 2 && 'success', contractData.lifeState === 2 && 'current']" class="fl">
                     <div class="rect"></div>
                     <div class="circle"></div>
                     <p>数据导入</p>
                 </li>
-                <li class="fl">
+                <li :class="[contractData.lifeState > 3 && 'success', contractData.lifeState === 3 && 'current']" class="fl">
                     <div class="rect"></div>
                     <div class="circle"></div>
                     <p>导出审核</p>
                 </li>
-                <li class="fl">
+                <li :class="[contractData.lifeState > 4 && 'success', contractData.lifeState === 4 && 'current']" class="fl">
                     <div class="rect"></div>
                     <div class="circle"></div>
                     <p>审核通过</p>
                 </li>
-                <li class="fl">
+                <li :class="[contractData.lifeState > 5 && 'success', contractData.lifeState === 5 && 'current']" class="fl">
+                    <div class="rect"></div>
+                    <div class="circle"></div>
+                    <p>销毁数据</p>
+                </li>
+                <li :class="[contractData.lifeState > 6 && 'success', contractData.lifeState === 6 && 'current']" class="fl">
                     <div class="rect"></div>
                     <div class="circle"></div>
                     <p>使用完成</p>
                 </li>
-                <li class="fl">
-                    <div class="rect"></div>
-                    <div class="circle"></div>
-                    <p>数据销毁</p>
-                </li>
             </ul>
             <div class="fl">
-                <div class="long fl"></div>
-                <div class="short fl"></div>
+                <div :class="{success : contractData.lifeState >= 6}" class="long fl"></div>
+                <div :class="{success : contractData.lifeState >= 6}" class="short fl"></div>
             </div>
         </div>
         <div class="content">
@@ -178,11 +173,33 @@
             width: 46px;
             height: 8px;
             background-color: #f3f7ff;
-            margin: 22px 10px 38px;
+            margin: 22px 10px 38px 11px;
 
         }
+        div.success{
+            background-color: #f77f5b;
+        }
+        div.current{
+            background-color: #5a8bff;
+        }
+        li.success{
+            div{
+                background-color: #f77f5b;
+            }
+            p{
+                color: #f77f5b;
+            }
+        }
+        li.current{
+            div{
+                background-color: #5a8bff;
+            }
+            p{
+                color: #5a8bff;
+            }
+        }
         li{
-            width: 176px;
+            width: 201px;
             margin: 14px 0 4px 0;
             position: relative;
             .rect{

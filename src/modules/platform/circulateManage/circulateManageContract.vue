@@ -15,7 +15,7 @@
         </div>
         <div class="contractContent">
             <div class="title"><h1>合约信息</h1></div>
-            <p>{{contractData.content}}</p>
+            <p v-html='contractData.content'></p>
             <div class="title"><h1>流通需求</h1></div>
             <p>需支付积分：<span>{{contractData.points}}</span>积分</p>
             <p>数据使用期限：<span>{{contractData.start+' —— '+contractData.end}}</span><strong>数据到期后将自动销毁</strong></p>
